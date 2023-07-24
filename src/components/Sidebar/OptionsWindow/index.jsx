@@ -15,8 +15,9 @@ const OptionsWindow = ({
   return (
     <WindowContainer style={isOpen ? { right: 0 } : { right: "-200px" }}>
       <Options>
-        <button onClick={() => handleOptionClick("ListaBlaster")}>Lista</button>
-        <button onClick={() => handleOptionClick("PastaBlaster")}>Pasta</button>
+        <button onClick={() => handleOptionClick("ListaBlaster")}>Pasta</button>
+        <button onClick={() => handleOptionClick("PastaBlaster")}>Lista</button>
+        <button onClick={() => handleOptionClick("PastaBlaster")}>Documento</button>
       </Options>
       <button onClick={onClose}>Fechar</button>
     </WindowContainer>
