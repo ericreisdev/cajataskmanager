@@ -8,6 +8,7 @@ const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
 
 const abrirTarefa = (pasta, tarefa) => {
   setTarefaSelecionada({ pasta: pasta.title, tarefa });
+  console.log(tarefa);
 };
 
 const fecharTarefa = () => {
