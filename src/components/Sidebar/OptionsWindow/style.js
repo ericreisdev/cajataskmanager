@@ -1,28 +1,51 @@
 import styled from "styled-components";
 
 export const WindowContainer = styled.div`
-  position: absolute;
-  top: 60%;
-  transform: translateY(-50%);
-  left: 200px;
+  position: fixed;
+  top: 0;
+  right: -200px;
   width: 200px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 16px;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: right 0.3s ease-in-out;
 `;
 
 export const Options = styled.div`
-  margin-bottom: 16px;
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #8b71e5;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #703ce5;
+    }
+  }
 `;
 
-export const Option = styled.div`
-  display: flex;
-  align-items: center;
+// Estilização para o botão de fechar
+export const CloseButton = styled.button`
+  background-color: #ffffff;
+  color: #8b71e5;
+  border: 1px solid #8b71e5;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
   cursor: pointer;
-  margin-bottom: 8px;
-`;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 
-export const Icon = styled.span`
-  margin-right: 8px;
+  &:hover {
+    color: #ffffff;
+    background-color: #8b71e5;
+    border-color: #8b71e5;
+  }
 `;

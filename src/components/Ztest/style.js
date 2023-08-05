@@ -1,40 +1,108 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const BarraLateralWrapper = styled.div`
-  width: 240px;
-  background-color: #f5f6f8;
-  padding: 16px;
+export const Container = styled.div`
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
 `;
 
-export const BarraLateralLista = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+export const Title = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+  color: #4f3d9e;
+  margin-bottom: 20px;
 `;
 
-export const BarraLateralItem = styled.li`
-  margin-bottom: 8px;
+export const Form = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 
-  a {
-    display: block;
-    padding: 8px;
-    color: #333;
-    text-decoration: none;
+  & > * {
+    flex: 1;
+    margin-right: 20px;
+    margin-bottom: 10px;
   }
+`;
 
-  a:hover {
-    background-color: #ddd;
+export const Input = styled.input`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #4f3d9e;
+`;
+
+export const Select = styled.select`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #4f3d9e;
+`;
+
+export const Button = styled.button`
+  padding: 10px;
+  background-color: #8b71e5;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #703ce5;
   }
+`;
 
-  ${({ active }) =>
-    active &&
-    `
-    a {
-      font-weight: bold;
-    }
+export const TarefaEmLinha = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  color: #4f3d9e;
+  font-size: 16px;
 
-    a, a:hover {
-      background-color: #ddd;
-    }
-  `}
+  & > div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+`;
+
+export const TarefaInfo = styled.div`
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const TarefaItem = styled.p`
+  margin-right: 20px;
+`;
+
+export const Image = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+`;
+
+export const Video = styled.video`
+  max-width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  & > * {
+    margin-right: 10px;
+  }
 `;

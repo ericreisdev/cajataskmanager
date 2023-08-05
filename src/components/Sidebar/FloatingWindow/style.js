@@ -1,64 +1,62 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  height: 600px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  width: 300px; /* Largura da janela flutuante */
+  height: 100%;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0; /* Posicionamento na lateral direita da janela */
 `;
 
-export const Title = styled.h2`
+export const Title = styled.div`
   font-size: 24px;
+  font-weight: bold;
+  color: #4f3d9e;
   margin-bottom: 20px;
-  color: #333;
 `;
 
 export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  p {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #4f3d9e;
+  }
 `;
 
 export const Input = styled.input`
-  width: 300px;
-  height: 40px;
-  padding: 10px;
-  margin-bottom: 10px;
+  width: 100%;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 `;
 
 export const Button = styled.button`
-  width: 120px;
-  height: 40px;
-  background: #007bff;
-  color: #fff;
+  background-color: #8b71e5;
+  color: #ffffff;
+  padding: 8px 16px;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: #703ce5;
+  }
 `;
 
 export const CloseButton = styled.button`
-  width: 120px;
-  height: 40px;
-  background: #e74c3c;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  margin-top: 20px;
+  background-color: #ffffff;
+  color: #4f3d9e;
+  border: 1px solid #4f3d9e;
+  padding: 8px 16px;
+  border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #4f3d9e;
+    color: #ffffff;
+  }
 `;
