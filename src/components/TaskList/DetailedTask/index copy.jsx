@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Janela, Conteudo, NomePasta, NomeTarefa, CaixaTexto } from "./style";
+import React, { useState } from 'react';
+import { Janela, Conteudo, NomePasta, NomeTarefa, CaixaTexto } from './style';
 
 const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
   const [details, setDetails] = useState(tarefa.details);
