@@ -1,18 +1,25 @@
 import React, { useState } from "react";
-import { Container, Title, Form, Input, Select, Button, TarefaEmLinha } from "./style";
+import {
+  Container,
+  Title,
+  Form,
+  Input,
+  Select,
+  Button,
+  TarefaEmLinha,
+} from "./style";
 import DetailedTask from "./DetailedTask/index";
 
 const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
-const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
+  const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
 
+  const abrirTarefa = (pasta, tarefa) => {
+    setTarefaSelecionada({ pasta: pasta.title, tarefa });
+  };
 
-const abrirTarefa = (pasta, tarefa) => {
-  setTarefaSelecionada({ pasta: pasta.title, tarefa });
-};
-
-const fecharTarefa = () => {
-  setTarefaSelecionada(null);
-};
+  const fecharTarefa = () => {
+    setTarefaSelecionada(null);
+  };
 
   const selectedSpace = spaces.find((space) => space.id === selectedSpaceId);
 
@@ -42,7 +49,7 @@ const fecharTarefa = () => {
 
   const handleTaskSubmit = (e) => {
     e.preventDefault();
-    onTaskSubmit(selectedSpaceId, newTask);
+    onTaskSubmit(selectedSpaceId, { ...newTask, details: "" });
     setNewTask({
       name: "",
       responsibility: "",
@@ -51,6 +58,18 @@ const fecharTarefa = () => {
     });
   };
 
+  const handleTaskDetailsSave = (taskId, details) => {
+    const updatedLists = selectedSpace.lists.map((list) =>
+      list.id === taskId ? { ...list, details } : list
+    );
+    const updatedSpace = { ...selectedSpace, lists: updatedLists };
+    const updatedSpaces = spaces.map((space) =>
+      space.id === selectedSpaceId ? updatedSpace : space
+    );
+    setSpaces(updatedSpaces);
+  };
+
+
   const handleEditTask = (taskId) => {
     const taskToEdit = selectedSpace.lists.find((list) => list.id === taskId);
     setEditMode(taskId);
@@ -58,7 +77,9 @@ const fecharTarefa = () => {
   };
 
   const handleDeleteTask = (taskId) => {
-    const updatedLists = selectedSpace.lists.filter((list) => list.id !== taskId);
+    const updatedLists = selectedSpace.lists.filter(
+      (list) => list.id !== taskId
+    );
     const updatedSpace = { ...selectedSpace, lists: updatedLists };
     const updatedSpaces = spaces.map((space) =>
       space.id === selectedSpaceId ? updatedSpace : space
@@ -90,14 +111,14 @@ const fecharTarefa = () => {
 
   return (
     <Container>
-
-{tarefaSelecionada && (
-  <DetailedTask
-    pasta={tarefaSelecionada.pasta}
-    tarefa={tarefaSelecionada.tarefa}
-    onClose={fecharTarefa}
-  />
-)}
+      {tarefaSelecionada && (
+        <DetailedTask
+          pasta={tarefaSelecionada.pasta}
+          tarefa={tarefaSelecionada.tarefa}
+          onClose={fecharTarefa}
+          onSave={handleTaskDetailsSave}
+        />
+      )}
 
       <Title>{selectedSpace.title}</Title>
       <Form onSubmit={handleTaskSubmit}>
@@ -146,7 +167,9 @@ const fecharTarefa = () => {
                 <Input
                   type="text"
                   value={updatedTask.responsibility}
-                  onChange={(e) => handleTaskUpdate("responsibility", e.target.value)}
+                  onChange={(e) =>
+                    handleTaskUpdate("responsibility", e.target.value)
+                  }
                 />
                 <Input
                   type="date"
@@ -168,13 +191,19 @@ const fecharTarefa = () => {
                 <TarefaEmLinha onClick={() => abrirTarefa(selectedSpace, list)}>
                   <div>
                     <p title="Clique para editar">Nome: {list.name}</p>
-                    <p title="Clique para editar">Responsável: {list.responsibility}</p>
+                    <p title="Clique para editar">
+                      Responsável: {list.responsibility}
+                    </p>
                     <p title="Clique para editar">Data: {list.dueDate}</p>
-                    <p title="Clique para editar">Prioridade: {list.priority}</p>
+                    <p title="Clique para editar">
+                      Prioridade: {list.priority}
+                    </p>
                   </div>
                   <div>
                     <Button onClick={() => handleEditTask(list.id)}>✏️</Button>
-                    <Button onClick={() => handleDeleteTask(list.id)}>🗑️</Button>
+                    <Button onClick={() => handleDeleteTask(list.id)}>
+                      🗑️
+                    </Button>
                   </div>
                 </TarefaEmLinha>
               </>
