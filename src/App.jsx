@@ -1,4 +1,3 @@
-// Importando módulos e componentes necessários
 import React, { useState, useEffect } from "react";
 import {
   GlobalStyle,
@@ -8,22 +7,23 @@ import {
 } from "./GlobalStyle";
 import Header from "./components/Header";
 import logoUrl from "./assets/img/caja sm ii.png";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/Sidebar/";
 import TaskList from "./components/TaskList";
 
-// Componente principal da aplicação
 const App = () => {
   const navItems = ["Lista", "Quadro", "Visualização"];
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
-  // useState para armazenar e gerenciar o estado dos 'spaces'
-  const [spaces, setSpaces] = useState([]);
-
-  // useState para armazenar e gerenciar o estado do 'selectedSpaceId'
+  const [spaces, setSpaces] = useState(() => {
+    const savedSpaces = localStorage.getItem('spaces')
+    return savedSpaces ? JSON.parse(savedSpaces) : [];
+  });
+  
   const [selectedSpaceId, setSelectedSpaceId] = useState(null);
 
-  // useEffect para carregar os 'spaces' do localStorage quando o componente é montado
-  useEffect(() => {
+
+   // useEffect para carregar os 'spaces' do localStorage quando o componente é montado
+   useEffect(() => {
     const savedSpaces = JSON.parse(localStorage.getItem("spaces"));
     if (savedSpaces) {
       setSpaces(savedSpaces);
@@ -35,7 +35,8 @@ const App = () => {
     localStorage.setItem("spaces", JSON.stringify(spaces));
   }, [spaces]);
 
-  // Função para lidar com a criação de um novo 'space'
+ 
+
   const handleNewSpaceSubmit = (newSpaceInput) => {
     if (newSpaceInput.trim() !== "") {
       const newSpace = {
@@ -43,12 +44,17 @@ const App = () => {
         title: newSpaceInput,
         lists: [],
       };
-      setSpaces((prevSpaces) => [...prevSpaces, newSpace]);
+  
+      setSpaces((prevSpaces) => {
+        const updatedSpaces = [...prevSpaces, newSpace];
+        localStorage.setItem("spaces", JSON.stringify(updatedSpaces));
+        return updatedSpaces;
+      });
+  
       setSelectedSpaceId(newSpace.id);
     }
   };
-
-  // Função para lidar com a criação de uma nova 'list'
+  
   const handleNewListSubmit = (spaceId, newListInput) => {
     if (newListInput.trim() !== "") {
       const newList = {
@@ -63,10 +69,10 @@ const App = () => {
             : space
         )
       );
+      localStorage.setItem("spaces", JSON.stringify([...spaces]));
     }
   };
 
-  // Função para lidar com a criação de uma nova 'task'
   const handleTaskSubmit = (spaceId, newTask) => {
     if (newTask) {
       setSpaces((prevSpaces) =>
@@ -79,10 +85,10 @@ const App = () => {
             : space
         )
       );
+      localStorage.setItem("spaces", JSON.stringify([...spaces]));
     }
   };
 
-  // Renderizando o componente
   return (
     <>
       <GlobalStyle />
@@ -94,9 +100,9 @@ const App = () => {
             onNewSpaceSubmit={handleNewSpaceSubmit}
             onNewListSubmit={handleNewListSubmit}
             spaces={spaces}
+            setSpaces={setSpaces}
             selectedSpaceId={selectedSpaceId}
             setSelectedSpaceId={setSelectedSpaceId}
-            setSpaces={setSpaces}
           />
         </SidebarContainer>
         <TaskListContainer>
