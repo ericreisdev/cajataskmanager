@@ -10,6 +10,7 @@ import {
   ArrowIcon,
   PlusSign,
   NewProduction,
+  DeleteButton,
 } from "./style";
 import FloatingWindow from "./FloatingWindow";
 import OptionsWindow from "./OptionsWindow";
@@ -44,13 +45,13 @@ const Sidebar = ({
     }
   };
 
-
-  
   // Função para lidar com a exclusão de uma pasta (space)
   const handleDeleteSpace = (spaceId) => {
-    setSpaces((prevSpaces) => prevSpaces.filter((space) => space.id !== spaceId));
+    setSpaces((prevSpaces) =>
+      prevSpaces.filter((space) => space.id !== spaceId)
+    );
   };
-const handleNewSpaceSubmit = (data) => {
+  const handleNewSpaceSubmit = (data) => {
     onNewSpaceSubmit(data); // chamamos a função onNewSpaceSubmit com os dados do novo espaço
     setSelectedSpaceId(data.id); // definimos o espaço selecionado como o novo espaço criado
     setShowOptionsWindow(true); // abrimos a janela de opções
@@ -124,13 +125,24 @@ const handleNewSpaceSubmit = (data) => {
                   onClick={() => toggleOptionsWindow(index)}
                   style={{ cursor: "pointer" }}
                 >
-                  
-  {/* Botão para excluir a pasta */}
-  <button onClick={() => handleDeleteSpace(space.id)}>🗑️</button>
-{space.title && (
-                    <PlusSign>
-                      {space.title} <span>➕</span> {/* Nome do Espaço */}
-                    </PlusSign>
+                  {/* Botão para excluir a pasta */}
+                  <button onClick={() => handleDeleteSpace(space.id)}>
+                    🗑️
+                  </button>
+                  {space.title && (
+                    <>
+                      <PlusSign>
+                        {space.title} {/* Nome do Espaço */}
+                      </PlusSign>
+                      <DeleteButton
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteSpace(space.id);
+                        }}
+                      >
+                        🗑️
+                      </DeleteButton>
+                    </>
                   )}
                 </div>
               ))}

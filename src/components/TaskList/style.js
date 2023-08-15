@@ -23,6 +23,14 @@ export const Form = styled.form`
     margin-right: 20px;
     margin-bottom: 10px;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    
+    & > * {
+      margin-right: 0;
+    }
+  }
 `;
 
 export const Input = styled.input`
@@ -31,6 +39,10 @@ export const Input = styled.input`
   border-radius: 5px;
   font-size: 16px;
   color: #4f3d9e;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Select = styled.select`
@@ -39,6 +51,10 @@ export const Select = styled.select`
   border-radius: 5px;
   font-size: 16px;
   color: #4f3d9e;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Button = styled.button`
@@ -75,8 +91,8 @@ export const TarefaEmLinha = styled.div`
 
   & > div > p {
     margin-right: 20px;
-    white-space: nowrap; // Evita quebras de linha
-    flex-grow: 1; // Permite que os parágrafos cresçam para ocupar o espaço disponível
+    white-space: nowrap;
+    flex-grow: 1;
   }
 
   & > div > div {
@@ -85,10 +101,19 @@ export const TarefaEmLinha = styled.div`
   }
 
   & > div > div > Button {
-    width: 40px; // Defina uma largura fixa para os botões
+    width: 40px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & > div > p {
+      white-space: normal;
+      margin-bottom: 10px;
+    }
   }
 `;
-
 
 export const Image = styled.img`
   max-width: 100%;
@@ -109,5 +134,14 @@ export const ButtonGroup = styled.div`
 
   & > * {
     margin-right: 10px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    
+    & > * {
+      margin-bottom: 10px;
+      margin-right: 0;
+    }
   }
 `;

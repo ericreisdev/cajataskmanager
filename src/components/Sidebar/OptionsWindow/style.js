@@ -10,6 +10,11 @@ export const WindowContainer = styled.div`
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: right 0.3s ease-in-out;
+
+  @media (max-width: 600px) {  /* When screen width is less than or equal to 600px */
+    width: 100%;  /* Set width to 100% for full coverage */
+    right: ${props => (props.isOpen ? "0" : "-100%")}; /* Adjust right position */
+  }
 `;
 
 export const Options = styled.div`
@@ -47,5 +52,11 @@ export const CloseButton = styled.button`
     color: #ffffff;
     background-color: #8b71e5;
     border-color: #8b71e5;
+  }
+
+  @media (max-width: 600px) { /* Adjustments for the close button on mobile */
+    position: absolute; 
+    top: 10px;
+    right: 10px; 
   }
 `;

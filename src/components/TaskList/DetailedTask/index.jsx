@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Janela, Conteudo, NomePasta, NomeTarefa, CaixaTexto } from "./style";
+import React, { useState, useRef } from "react";
+import { Janela, Conteudo, NomePasta, NomeTarefa, CaixaTexto, Botao, BotaoFechar } from "./style";
 
 const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
   const [details, setDetails] = useState(tarefa.details);
+  const textAreaRef = useRef(null);
 
   const handleDetailsChange = (e) => {
     setDetails(e.target.value);
@@ -14,6 +15,18 @@ const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
     onClose();
   };
 
+  const handleBold = (e) => {
+    e.preventDefault();
+    document.execCommand('bold', false, null);
+    textAreaRef.current.focus();
+  };
+
+  const handleItalic = (e) => {
+    e.preventDefault();
+    document.execCommand('italic', false, null);
+    textAreaRef.current.focus();
+  };
+
   return (
     <Janela onClick={onClose}>
       <Conteudo onClick={(e) => e.stopPropagation()}>
@@ -23,11 +36,13 @@ const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
           <CaixaTexto
             value={details}
             onChange={handleDetailsChange}
-            placeholder="Digite aqui..."
+            ref={textAreaRef}
           />
-          <button type="submit">Salvar</button>
+          <Botao onClick={handleBold}>Negrito</Botao>
+          <Botao onClick={handleItalic}>Itálico</Botao>
+          <Botao type="submit">Salvar</Botao>
+          <BotaoFechar onClick={onClose}>Fechar</BotaoFechar>
         </form>
-        <button onClick={onClose}>Fechar</button>
       </Conteudo>
     </Janela>
   );
