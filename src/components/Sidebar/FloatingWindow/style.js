@@ -2,12 +2,17 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #ffffff;
-  width: 300px; /* Largura da janela flutuante */
-  height: 100%;
+  width: 300px;
+  height: auto; /* Let the height be based on content */
   padding: 20px;
   position: fixed;
-  top: 0;
-  right: 0; /* Posicionamento na lateral direita da janela */
+  top: 50%; /* Center the top position */
+  left: 50%; /* Center the left position */
+  transform: translate(-50%, -50%); /* Use transform to perfectly center */
+
+  @media (max-width: 600px) {  /* When screen width is less than or equal to 600px */
+    width: 90%;  /* Give it a little margin on small screens */
+  }
 `;
 
 export const Title = styled.div`

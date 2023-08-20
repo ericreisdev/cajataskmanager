@@ -1,10 +1,32 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+const ButtonStyle = css`
+  padding: 4px;
+  color: #ffffff;
+  background-color: #8b71e5;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #703ce5;
+  }
+`;
+
 
 export const Container = styled.div`
   background-color: #ffffff;
-  width: 220px; /* Largura reduzida para deixar a sidebar mais estreita */
+  width: 220px;
   height: 100%;
   padding: 20px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px;
+  }
 `;
 
 export const Logo = styled.div`
@@ -39,13 +61,42 @@ export const ArrowIcon = styled.span`
   transition: transform 0.3s ease-in-out;
 `;
 
+export const DeleteButton = styled.button`
+  background-color: #ff4d4d;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 4px;
+  margin-left: 5px; // Adicionei uma margem à esquerda para espaçar do título
+
+  &:hover {
+    background-color: #cc0000;
+  }
+`;
+
 export const SectionContent = styled.div`
   margin-top: 10px;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    &:hover ${DeleteButton} {
+      visibility: visible;  // O ícone ficará visível quando o mouse estiver sobre a div
+    }
+  }
+
+  ${DeleteButton} {
+    visibility: hidden; // O ícone ficará oculto por padrão
+  }
+
 `;
 
 export const NavItem = styled.div`
   padding: 5px 0;
-  color: #ffffff; /* Texto branco para contrastar com o botão lila */
+  color: #4f3d9e;
+
   cursor: pointer;
   transition: color 0.3s ease-in-out;
 
@@ -55,35 +106,15 @@ export const NavItem = styled.div`
 `;
 
 export const PlusSign = styled.div`
-  color: #ffffff; /* Texto branco para contrastar com o botão lila */
-  font-weight: bold;
+  ${ButtonStyle}
   display: flex;
   align-items: center;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-  margin-bottom: 10px;
-  background-color: #8b71e5;
-  padding: 3.2px;
-  transition: background-color 0.3s ease-in-out;
-
-  &:hover {
-    background-color: #703ce5;
-  }
 `;
 
 export const NewProduction = styled.div`
-  padding: 4px;
-  color: #ffffff; /* Texto branco para contrastar com o botão lila */
-  background-color: #8b71e5;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease-in-out;
-
-  &:hover {
-    background-color: #703ce5;
-  }
+  ${ButtonStyle}
 `;
+
+
+
+
