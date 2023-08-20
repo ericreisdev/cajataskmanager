@@ -17,3 +17,10 @@ No componente DetailedTask, adicionamos uma nova funcionalidade que permite ao u
 Todas as informações são persistentes entre as sessões do navegador graças ao uso do localStorage e do useEffect.
 
 Os componentes modificados neste PR incluem App, Sidebar, FloatingWindow, OptionsWindow, TaskList e DetailedTask.
+
+
+
+
+
+
+

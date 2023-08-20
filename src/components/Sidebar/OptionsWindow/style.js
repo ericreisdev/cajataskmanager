@@ -20,7 +20,7 @@ export const WindowContainer = styled.div`
 export const Options = styled.div`
   button {
     display: block;
-    width: 100%;
+    width: 50%;
     padding: 10px;
     margin-bottom: 10px;
     background-color: #8b71e5;

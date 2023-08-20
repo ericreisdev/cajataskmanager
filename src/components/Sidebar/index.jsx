@@ -14,6 +14,8 @@ import {
 } from "./style";
 import FloatingWindow from "./FloatingWindow";
 import OptionsWindow from "./OptionsWindow";
+import { FaTrash } from "react-icons/fa";
+import ConfirmModal from "./ConfirmModal";
 
 // Definindo o componente Sidebar
 const Sidebar = ({
@@ -27,7 +29,9 @@ const Sidebar = ({
 }) => {
   const [expandedSections, setExpandedSections] = useState([]); // lista de seções expandidas
   const [showFloatingWindow, setShowFloatingWindow] = useState(false); // controla se a janela flutuante está aberta ou não
-  const [showOptionsWindow, setShowOptionsWindow] = useState(false); // controla se a janela de opções está aberta ou não
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [spaceToDelete, setSpaceToDelete] = useState(null);
 
   // função para expandir ou retrair uma seção quando seu header é clicado
   const toggleExpansion = (sectionIndex) => {
@@ -46,15 +50,14 @@ const Sidebar = ({
   };
 
   // Função para lidar com a exclusão de uma pasta (space)
-  const handleDeleteSpace = (spaceId) => {
-    setSpaces((prevSpaces) =>
-      prevSpaces.filter((space) => space.id !== spaceId)
-    );
+  const handleDeleteSpace = (spaceId, spaceTitle) => {
+    setSpaceToDelete({ id: spaceId, title: spaceTitle });
+    setShowConfirmModal(true);
   };
+
   const handleNewSpaceSubmit = (data) => {
     onNewSpaceSubmit(data); // chamamos a função onNewSpaceSubmit com os dados do novo espaço
     setSelectedSpaceId(data.id); // definimos o espaço selecionado como o novo espaço criado
-    setShowOptionsWindow(true); // abrimos a janela de opções
     setShowFloatingWindow(false); // fechamos a janela flutuante
     setSpaces((prevSpaces) => [...prevSpaces, data]); // atualizamos os espaços com o novo espaço criado
   };
@@ -62,13 +65,13 @@ const Sidebar = ({
   // função para lidar com a submissão de uma nova lista
   const handleNewListSubmit = (spaceId, data) => {
     onNewListSubmit(spaceId, data); // chamamos a função onNewListSubmit com o id do espaço e os dados da nova lista
-    setShowOptionsWindow(false); // fechamos a janela de opções
+   
   };
 
   // função para abrir ou fechar a janela de opções quando um espaço é clicado
   const toggleOptionsWindow = (selectedIndex) => {
     setSelectedSpaceId(spaces[selectedIndex].id); // definimos o espaço selecionado como o espaço clicado
-    setShowOptionsWindow((prevState) => !prevState); // invertemos o estado da janela de opções (se estava aberta, fechamos; se estava fechada, abrimos)
+    
   };
 
   return (
@@ -119,33 +122,35 @@ const Sidebar = ({
               <NewProduction onClick={() => setShowFloatingWindow(true)}>
                 + Adicionar Pasta
               </NewProduction>
-              {spaces.map((space, index) => (
-                <div
-                  key={index}
-                  onClick={() => toggleOptionsWindow(index)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {/* Botão para excluir a pasta */}
-                  <button onClick={() => handleDeleteSpace(space.id)}>
-                    🗑️
-                  </button>
-                  {space.title && (
-                    <>
-                      <PlusSign>
-                        {space.title} {/* Nome do Espaço */}
-                      </PlusSign>
-                      <DeleteButton
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteSpace(space.id);
-                        }}
-                      >
-                        🗑️
-                      </DeleteButton>
-                    </>
-                  )}
-                </div>
-              ))}
+              {spaces.map((space, index) =>
+                space.title ? (
+                  <div
+                    key={index}
+                    onClick={() => toggleOptionsWindow(index)}
+                    style={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* Botão para excluir a pasta */}
+                    <button
+                      onClick={() => handleDeleteSpace(space.id)}
+                    ></button>
+                    <PlusSign>
+                      {space.title} {/* Nome do Espaço */}
+                    </PlusSign>
+                    <DeleteButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteSpace(space.id, space.title);
+                      }}
+                    >
+                      <FaTrash />
+                    </DeleteButton>
+                  </div>
+                ) : null
+              )}
               {/* ... */}
             </SectionContent>
           )}
@@ -175,12 +180,26 @@ const Sidebar = ({
         />
       )}
       {/* // A janela de opções é mostrada se o estado showOptionsWindow for verdadeiro */}
-      {showOptionsWindow && (
+      {/* {showOptionsWindow && (
         <OptionsWindow
           isOpen={showOptionsWindow}
-          onClose={() => setShowOptionsWindow(false)}
+          
           selectedSpace={spaces.find((space) => space.id === selectedSpaceId)}
           onNewListSubmit={handleNewListSubmit}
+        />
+      )} */}
+
+      {showConfirmModal && (
+        <ConfirmModal
+          isOpen={showConfirmModal}
+          onClose={() => setShowConfirmModal(false)}
+          onConfirm={() => {
+            setSpaces((prevSpaces) =>
+              prevSpaces.filter((space) => space.id !== spaceToDelete.id)
+            );
+            setShowConfirmModal(false);
+          }}
+          spaceTitle={spaceToDelete ? spaceToDelete.title : ""}
         />
       )}
     </Container>

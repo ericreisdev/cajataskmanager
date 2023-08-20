@@ -6,11 +6,14 @@ export const Container = styled.div`
   padding: 20px;
 `;
 
+
+
 export const Title = styled.h1`
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   color: #4f3d9e;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 export const Form = styled.form`
@@ -39,6 +42,7 @@ export const Input = styled.input`
   border-radius: 5px;
   font-size: 16px;
   color: #4f3d9e;
+  width: 100%;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -58,9 +62,9 @@ export const Select = styled.select`
 `;
 
 export const Button = styled.button`
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #8b71e5;
-  color: #ffffff;
+  color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -72,16 +76,32 @@ export const Button = styled.button`
   }
 `;
 
+export const EditButton = styled(Button)`
+  visibility: hidden;  // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+`;
+
+export const DeleteButton = styled(Button)`
+  visibility: hidden;  // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+`;
+
 export const TarefaEmLinha = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
   background-color: #f2f2f2;
   border-radius: 5px;
-  color: #4f3d9e;
   font-size: 16px;
+  color: #4f3d9e;
+
+  &:hover ${EditButton},
+  &:hover ${DeleteButton} {
+    visibility: visible;  // ou 'opacity: 1;' para mostrar
+  }
+
 
   & > div {
     display: flex;
@@ -98,10 +118,11 @@ export const TarefaEmLinha = styled.div`
   & > div > div {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
   }
 
   & > div > div > Button {
-    width: 40px;
+    margin-left: 10px;
   }
 
   @media (max-width: 768px) {
@@ -115,33 +136,3 @@ export const TarefaEmLinha = styled.div`
   }
 `;
 
-export const Image = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin-top: 10px;
-`;
-
-export const Video = styled.video`
-  max-width: 100%;
-  border-radius: 5px;
-  margin-top: 10px;
-`;
-
-export const ButtonGroup = styled.div`
-  display: flex;
-  align-items: center;
-
-  & > * {
-    margin-right: 10px;
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    
-    & > * {
-      margin-bottom: 10px;
-      margin-right: 0;
-    }
-  }
-`;

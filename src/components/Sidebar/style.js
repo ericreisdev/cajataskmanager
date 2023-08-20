@@ -61,8 +61,36 @@ export const ArrowIcon = styled.span`
   transition: transform 0.3s ease-in-out;
 `;
 
+export const DeleteButton = styled.button`
+  background-color: #ff4d4d;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 4px;
+  margin-left: 5px; // Adicionei uma margem à esquerda para espaçar do título
+
+  &:hover {
+    background-color: #cc0000;
+  }
+`;
+
 export const SectionContent = styled.div`
   margin-top: 10px;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    &:hover ${DeleteButton} {
+      visibility: visible;  // O ícone ficará visível quando o mouse estiver sobre a div
+    }
+  }
+
+  ${DeleteButton} {
+    visibility: hidden; // O ícone ficará oculto por padrão
+  }
+
 `;
 
 export const NavItem = styled.div`
@@ -90,13 +118,3 @@ export const NewProduction = styled.div`
 
 
 
-export const DeleteButton = styled.button`
-  ${ButtonStyle}
-  background-color: #ff4d4d;
-
-  &:hover {
-    background-color: #cc0000;
-  }
-  border: none;
-  outline: none;
-`;

@@ -7,11 +7,11 @@ import {
 } from "./GlobalStyle";
 import Header from "./components/Header";
 import logoUrl from "./assets/img/caja sm ii.png";
-import Sidebar from "./components/Sidebar/";
+import Sidebar from "./components/Sidebar/index";
 import TaskList from "./components/TaskList";
 
 const App = () => {
-  const navItems = ["Lista", "Quadro", "Visualização"];
+  const navItems = ["Home", "Sobre", "Contato"];
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
   const [spaces, setSpaces] = useState(() => {

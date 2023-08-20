@@ -6,12 +6,21 @@ import {
   Input,
   Select,
   Button,
+  EditButton,
+  DeleteButton,
   TarefaEmLinha,
 } from "./style";
 import DetailedTask from "./DetailedTask/index";
+import { FaPlus, FaInfoCircle, FaTrash, FaEdit, FaSave } from "react-icons/fa";
 
 const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
+
+  const [showTaskForm, setShowTaskForm] = useState(false);
+
+  const toggleTaskForm = () => {
+    setShowTaskForm(!showTaskForm);
+  };
 
   const abrirTarefa = (pasta, tarefa) => {
     setTarefaSelecionada({ pasta: pasta.title, tarefa });
@@ -23,7 +32,6 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
 
   const selectedSpace = spaces.find((space) => space.id === selectedSpaceId);
 
-  
   useEffect(() => {
     if (selectedSpace) {
       localStorage.setItem("tasks", JSON.stringify(selectedSpace.lists));
@@ -46,6 +54,15 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
     priority: "Alto",
   });
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  };
+
   const handleTaskChange = (e) => {
     const { name, value } = e.target;
     setNewTask((prevTask) => ({
@@ -56,6 +73,11 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
 
   const handleTaskSubmit = (e) => {
     e.preventDefault();
+
+    if (newTask.name.trim() === "" || newTask.responsibility.trim() === "") {
+      alert("Os campos nome e responsável são obrigatórios");
+      return;
+    }
     onTaskSubmit(selectedSpaceId, { ...newTask, details: "" });
     setNewTask({
       name: "",
@@ -125,41 +147,42 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
           onSave={handleTaskDetailsSave}
         />
       )}
-
       <Title>{selectedSpace.title}</Title>
-      <Form onSubmit={handleTaskSubmit}>
-        <Input
-          type="text"
-          name="name"
-          value={newTask.name}
-          onChange={handleTaskChange}
-          placeholder="Nome da Tarefa"
-        />
-        <Input
-          type="text"
-          name="responsibility"
-          value={newTask.responsibility}
-          onChange={handleTaskChange}
-          placeholder="Responsável"
-        />
-        <Input
-          type="date"
-          name="dueDate"
-          value={newTask.dueDate}
-          onChange={handleTaskChange}
-        />
-        <Select
-          name="priority"
-          value={newTask.priority}
-          onChange={handleTaskChange}
-        >
-          <option value="Alto">Alto</option>
-          <option value="Médio">Médio</option>
-          <option value="Baixo">Baixo</option>
-        </Select>
-        <Button type="submit">Salvar Tarefa</Button>
-      </Form>
-
+      <Button onClick={toggleTaskForm}>Nova Lista <FaPlus/></Button>{" "}
+      {showTaskForm && (
+        <Form onSubmit={handleTaskSubmit}>
+          <Input
+            type="text"
+            name="name"
+            value={newTask.name}
+            onChange={handleTaskChange}
+            placeholder="Nome da Tarefa"
+          />
+          <Input
+            type="text"
+            name="responsibility"
+            value={newTask.responsibility}
+            onChange={handleTaskChange}
+            placeholder="Responsável"
+          />
+          <Input
+            type="date"
+            name="dueDate"
+            value={newTask.dueDate}
+            onChange={handleTaskChange}
+          />
+          <Select
+            name="priority"
+            value={newTask.priority}
+            onChange={handleTaskChange}
+          >
+            <option value="Alto">Alto</option>
+            <option value="Médio">Médio</option>
+            <option value="Baixo">Baixo</option>
+          </Select>
+          <Button type="submit"><FaSave/></Button>
+        </Form>
+      )}
       <ul>
         {selectedSpace.lists.map((list) => (
           <li key={list.id}>
@@ -194,26 +217,33 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
               </>
             ) : (
               <>
-                <TarefaEmLinha onClick={() => abrirTarefa(selectedSpace, list)}>
+                <TarefaEmLinha>
                   <div>
                     <p title="Clique para editar">Nome: {list.name}</p>
                     <p title="Clique para editar">
                       Responsável: {list.responsibility}
                     </p>
-                    <p title="Clique para editar">Data: {list.dueDate}</p>
+                    <p title="Clique para editar">
+                      Data: {formatDate(list.dueDate)}
+                    </p>
                     <p title="Clique para editar">
                       Prioridade: {list.priority}
                     </p>
                   </div>
                   <div>
-                    <Button onClick={() => handleEditTask(list.id)}>✏️</Button>
-                    <Button onClick={() => handleDeleteTask(list.id)}>
-                      🗑️
-                    </Button>
+                    <EditButton onClick={() => handleEditTask(list.id)}>
+                      <FaEdit />
+                    </EditButton>
+                    <DeleteButton onClick={() => handleDeleteTask(list.id)}>
+                      <FaTrash />
+                    </DeleteButton>
                   </div>
                 </TarefaEmLinha>
               </>
             )}
+            <Button onClick={() => abrirTarefa(selectedSpace, list)}>
+             <FaInfoCircle/>
+            </Button>
           </li>
         ))}
       </ul>
