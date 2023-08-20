@@ -105,16 +105,22 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
   };
 
   const handleDeleteTask = (taskId) => {
-    const updatedLists = selectedSpace.lists.filter(
-      (list) => list.id !== taskId
+    const confirmDelete = window.confirm(
+      "Você tem certeza que deseja excluir esta lista?"
     );
-    const updatedSpace = { ...selectedSpace, lists: updatedLists };
-    const updatedSpaces = spaces.map((space) =>
-      space.id === selectedSpaceId ? updatedSpace : space
-    );
-    setSpaces(updatedSpaces);
-    setEditMode(null);
-  };
+    if(confirmDelete){
+      const updatedLists = selectedSpace.lists.filter(
+        (list) => list.id !== taskId
+      );
+      const updatedSpace = { ...selectedSpace, lists: updatedLists };
+      const updatedSpaces = spaces.map((space) =>
+        space.id === selectedSpaceId ? updatedSpace : space
+      );
+      setSpaces(updatedSpaces);
+      setEditMode(null);
+    };
+    }
+    
 
   const handleTaskUpdate = (field, value) => {
     setUpdatedTask((prevTask) => ({ ...prevTask, [field]: value }));
@@ -148,7 +154,9 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         />
       )}
       <Title>{selectedSpace.title}</Title>
-      <Button onClick={toggleTaskForm}>Nova Lista <FaPlus/></Button>{" "}
+      <Button onClick={toggleTaskForm}>
+        Nova Lista <FaPlus />
+      </Button>{" "}
       {showTaskForm && (
         <Form onSubmit={handleTaskSubmit}>
           <Input
@@ -180,7 +188,9 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
             <option value="Médio">Médio</option>
             <option value="Baixo">Baixo</option>
           </Select>
-          <Button type="submit"><FaSave/></Button>
+          <Button type="submit">
+            <FaSave />
+          </Button>
         </Form>
       )}
       <ul>
@@ -242,7 +252,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
               </>
             )}
             <Button onClick={() => abrirTarefa(selectedSpace, list)}>
-             <FaInfoCircle/>
+              <FaInfoCircle />
             </Button>
           </li>
         ))}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Title, Form, Input, Button, CloseButton } from "./style";
+import { Container, Title, Form, Input, Button, CloseButton, SaveCentral, CloseCentral } from "./style";
+import { FaSave, FaTimes } from "react-icons/fa";
 
 const FloatingWindow = ({ onClose, onSubmit }) => {
   const [input, setInput] = useState("");
@@ -21,9 +22,13 @@ const FloatingWindow = ({ onClose, onSubmit }) => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Inserir nome da Pasta"
         />
-        <Button type="submit">+ Salvar Pasta</Button>
+        <SaveCentral><Button type="submit"><FaSave/></Button></SaveCentral>
+        
       </Form>
-      <CloseButton onClick={onClose}>Fechar</CloseButton>
+      <CloseCentral>
+      <CloseButton onClick={onClose}><FaTimes/></CloseButton>  
+      </CloseCentral>
+      
     </Container>
   );
 };
