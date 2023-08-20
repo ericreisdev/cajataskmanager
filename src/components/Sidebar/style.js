@@ -62,7 +62,23 @@ export const ArrowIcon = styled.span`
 `;
 
 export const DeleteButton = styled.button`
-  background-color: #ff4d4d;
+  background-color: #4f3d9e;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 4px;
+  margin-left: 5px; // Adicionei uma margem à esquerda para espaçar do título
+  visibility: hidden;  // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+
+  &:hover {
+    background-color: #cc0000;
+  }
+`;
+
+export const EditFolder = styled.button`
+  background-color: #4f3d9e;
   border: none;
   outline: none;
   cursor: pointer;
@@ -71,7 +87,23 @@ export const DeleteButton = styled.button`
   margin-left: 5px; // Adicionei uma margem à esquerda para espaçar do título
 
   &:hover {
-    background-color: #cc0000;
+    background-color: #4f3d9e;
+  }
+  visibility: hidden;  // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+`;
+
+
+export const Input = styled.input`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #4f3d9e;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -87,9 +119,11 @@ export const SectionContent = styled.div`
     }
   }
 
-  ${DeleteButton} {
-    visibility: hidden; // O ícone ficará oculto por padrão
+  &:hover ${EditFolder},
+  &:hover ${DeleteButton} {
+    visibility: visible;  // ou 'opacity: 1;' para mostrar
   }
+
 
 `;
 

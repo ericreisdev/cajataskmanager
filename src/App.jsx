@@ -15,15 +15,32 @@ const App = () => {
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
   const [spaces, setSpaces] = useState(() => {
-    const savedSpaces = localStorage.getItem('spaces')
+    const savedSpaces = localStorage.getItem("spaces");
     return savedSpaces ? JSON.parse(savedSpaces) : [];
   });
-  
+
   const [selectedSpaceId, setSelectedSpaceId] = useState(null);
+  const [editingSpaceId, setEditingSpaceId] = useState(null);
+  const [editingSpaceValue, setEditingSpaceValue] = useState("");
 
+  const handleEditSpace = (spaceId, spaceTitle) => {
+    setEditingSpaceId(spaceId);
+    setEditingSpaceValue(spaceTitle);
+  };
 
-   // useEffect para carregar os 'spaces' do localStorage quando o componente é montado
-   useEffect(() => {
+  const handleSaveEdit = () => {
+    setSpaces((prevSpaces) =>
+      prevSpaces.map((space) =>
+        space.id === editingSpaceId
+          ? { ...space, title: editingSpaceValue }
+          : space
+      )
+    );
+    setEditingSpaceId(null)
+  };
+
+  // useEffect para carregar os 'spaces' do localStorage quando o componente é montado
+  useEffect(() => {
     const savedSpaces = JSON.parse(localStorage.getItem("spaces"));
     if (savedSpaces) {
       setSpaces(savedSpaces);
@@ -35,8 +52,6 @@ const App = () => {
     localStorage.setItem("spaces", JSON.stringify(spaces));
   }, [spaces]);
 
- 
-
   const handleNewSpaceSubmit = (newSpaceInput) => {
     if (newSpaceInput.trim() !== "") {
       const newSpace = {
@@ -44,17 +59,17 @@ const App = () => {
         title: newSpaceInput,
         lists: [],
       };
-  
+
       setSpaces((prevSpaces) => {
         const updatedSpaces = [...prevSpaces, newSpace];
         localStorage.setItem("spaces", JSON.stringify(updatedSpaces));
         return updatedSpaces;
       });
-  
+
       setSelectedSpaceId(newSpace.id);
     }
   };
-  
+
   const handleNewListSubmit = (spaceId, newListInput) => {
     if (newListInput.trim() !== "") {
       const newList = {
@@ -103,6 +118,12 @@ const App = () => {
             setSpaces={setSpaces}
             selectedSpaceId={selectedSpaceId}
             setSelectedSpaceId={setSelectedSpaceId}
+            editingSpaceId={editingSpaceId}
+            setEditingSpaceId={setEditingSpaceId}
+            editingSpaceValue={editingSpaceValue}
+            setEditingSpaceValue={setEditingSpaceValue}
+            handleEditSpace={handleEditSpace}
+            handleSaveEdit={handleSaveEdit}
           />
         </SidebarContainer>
         <TaskListContainer>

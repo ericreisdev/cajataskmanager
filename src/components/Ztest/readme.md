@@ -1,50 +1,27 @@
-Para tornar a interface mais intuitiva com ícones, você pode usar bibliotecas de ícones como `react-icons`, que já parece estar em uso no seu projeto.
+Se você está tentando centralizar o `CloseButton`, o problema pode ser que a propriedade `justify-content: center` e `align-items: center` estão sendo aplicadas ao `CloseButton` em si, mas essas propriedades só afetam os elementos filhos do container, não o container em si.
 
-Aqui estão algumas sugestões para substituir os botões de texto por ícones:
+Para centralizar o `CloseButton`, você pode envolver o `CloseButton` em um novo container `div` e aplicar as propriedades de alinhamento (`justify-content` e `align-items`) a esse container.
 
-1. Substituir "Criar Nova Lista" por um ícone de "Adicionar" (+).
-2. Substituir "Detalhes de {list.name}" por um ícone de "Informações" (i).
+Aqui está uma maneira de fazer isso:
 
-Vamos fazer essas alterações no seu componente `TaskList`.
+1. Crie um styled component chamado `ButtonContainer`:
 
-```jsx
-
-// ... outros imports ...
-
-const TaskList = ({ /* ... seus props ... */ }) => {
-  // ... seu estado e lógica ...
-
-  return (
-    <Container>
-      {tarefaSelecionada && (
-        // ... seu DetailedTask ...
-      )}
-      <Title>{selectedSpace.title}</Title>
-
-      {/* Botão para criar nova lista */}
-      <Button onClick={toggleTaskForm}>
-        <FaPlus /> {/* ícone de Adicionar */}
-      </Button>
-
-      {/* ... o resto do seu formulário ... */}
-
-      <ul>
-        {selectedSpace.lists.map((list) => (
-          <li key={list.id}>
-            {/* ... sua lógica para editar ou excluir ... */}
-
-            {/* Botão para abrir detalhes da tarefa */}
-            <Button onClick={() => abrirTarefa(selectedSpace, list)}>
-              <FaInfoCircle /> {/* ícone de Informações */}
-            </Button>
-          </li>
-        ))}
-      </ul>
-    </Container>
-  );
-};
-
-export default TaskList;
+```javascript
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 ```
 
-Neste exemplo, usei o ícone `FaPlus` para "Criar Nova Lista" e o ícone `FaInfoCircle` para "Detalhes de {list.name}". Você pode escolher outros ícones que você achar mais adequados. O importante é que eles sejam intuitivos para os usuários.
+2. Agora, envolva seu `CloseButton` neste `ButtonContainer` em seu componente React:
+
+```javascript
+<ButtonContainer>
+  <CloseButton>Fechar</CloseButton>
+</ButtonContainer>
+```
+
+O `ButtonContainer` tem `display: flex;` e `justify-content: center; align-items: center;` para centralizar o `CloseButton` dentro dele.
+
+Isso deve centralizar o seu `CloseButton`. Se o `CloseButton` ainda não estiver centralizado, você pode querer verificar se outras partes do seu código CSS ou JSX estão afetando seu layout.

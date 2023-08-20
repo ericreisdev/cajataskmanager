@@ -11,10 +11,12 @@ import {
   PlusSign,
   NewProduction,
   DeleteButton,
+  EditFolder,
+  Input,
 } from "./style";
 import FloatingWindow from "./FloatingWindow";
 import OptionsWindow from "./OptionsWindow";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit, FaSave } from "react-icons/fa";
 import ConfirmModal from "./ConfirmModal";
 
 // Definindo o componente Sidebar
@@ -25,7 +27,13 @@ const Sidebar = ({
   spaces, // espaços atualmente existentes
   selectedSpaceId, // id do espaço selecionado
   setSelectedSpaceId, // função para atualizar o id do espaço selecionado
-  setSpaces, // função para atualizar os espaços
+  setSpaces,
+  editingSpaceId,
+  setEditingSpaceId,
+  editingSpaceValue,
+  setEditingSpaceValue,
+  handleEditSpace,
+  handleSaveEdit, // função para atualizar os espaços
 }) => {
   const [expandedSections, setExpandedSections] = useState([]); // lista de seções expandidas
   const [showFloatingWindow, setShowFloatingWindow] = useState(false); // controla se a janela flutuante está aberta ou não
@@ -65,13 +73,11 @@ const Sidebar = ({
   // função para lidar com a submissão de uma nova lista
   const handleNewListSubmit = (spaceId, data) => {
     onNewListSubmit(spaceId, data); // chamamos a função onNewListSubmit com o id do espaço e os dados da nova lista
-   
   };
 
   // função para abrir ou fechar a janela de opções quando um espaço é clicado
   const toggleOptionsWindow = (selectedIndex) => {
     setSelectedSpaceId(spaces[selectedIndex].id); // definimos o espaço selecionado como o espaço clicado
-    
   };
 
   return (
@@ -133,13 +139,15 @@ const Sidebar = ({
                       alignItems: "center",
                     }}
                   >
-                    {/* Botão para excluir a pasta */}
-                    <button
-                      onClick={() => handleDeleteSpace(space.id)}
-                    ></button>
-                    <PlusSign>
-                      {space.title} {/* Nome do Espaço */}
-                    </PlusSign>
+                    {editingSpaceId === space.id ? (
+                      <Input type="text" name="" id="" value={editingSpaceValue} onChange={(e) => setEditingSpaceValue(e.target.value)} />
+                    ) : ( 
+                       <PlusSign>
+                      {space.title}
+                    </PlusSign> )}
+                    
+                    {editingSpaceId === space.id ? (<EditFolder onClick={handleSaveEdit} ><FaSave/></EditFolder>) : ( <EditFolder onClick={() => handleEditSpace(space.id, space.title)}><FaEdit/></EditFolder>  ) }
+                   
                     <DeleteButton
                       onClick={(e) => {
                         e.stopPropagation();
@@ -148,6 +156,7 @@ const Sidebar = ({
                     >
                       <FaTrash />
                     </DeleteButton>
+                    
                   </div>
                 ) : null
               )}

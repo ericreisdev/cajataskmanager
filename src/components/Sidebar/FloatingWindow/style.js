@@ -59,9 +59,29 @@ export const CloseButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     background-color: #4f3d9e;
     color: #ffffff;
   }
 `;
+
+export const SaveCentral = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+
+`
+
+export const CloseCentral = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+
+`
