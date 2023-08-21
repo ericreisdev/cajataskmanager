@@ -9,9 +9,10 @@ import {
   EditButton,
   DeleteButton,
   TarefaEmLinha,
+  ButtonNewList,
 } from "./style";
 import DetailedTask from "./DetailedTask/index";
-import { FaPlus, FaInfoCircle, FaTrash, FaEdit, FaSave } from "react-icons/fa";
+import { FaPlus, FaInfoCircle, FaTrash, FaEdit, FaSave, FaAlignRight, FaAlignCenter } from "react-icons/fa";
 
 const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
@@ -154,8 +155,9 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         />
       )}
       <Title>{selectedSpace.title}</Title>
+      <ButtonNewList>Nova Lista </ButtonNewList>
       <Button onClick={toggleTaskForm}>
-        Nova Lista <FaPlus />
+          <FaPlus />
       </Button>{" "}
       {showTaskForm && (
         <Form onSubmit={handleTaskSubmit}>

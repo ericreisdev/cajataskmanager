@@ -6,7 +6,25 @@ export const Container = styled.div`
   padding: 20px;
 `;
 
+export const ButtonNewList = styled.span`
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: white;
 
+  color: #8b71e5;
+  font-size: 72px;
+  margin-right: -15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 22px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-weight: bolder;
+
+  
+`;
 
 export const Title = styled.h1`
   font-size: 28px;
@@ -29,7 +47,7 @@ export const Form = styled.form`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    
+
     & > * {
       margin-right: 0;
     }
@@ -64,6 +82,7 @@ export const Select = styled.select`
 export const Button = styled.button`
   padding: 10px 20px;
   background-color: #8b71e5;
+  width: 20;
   color: white;
   border: none;
   border-radius: 5px;
@@ -71,19 +90,23 @@ export const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 
+  .plus-button{
+    width: 70px;
+  }
+
   &:hover {
     background-color: #703ce5;
   }
 `;
 
 export const EditButton = styled(Button)`
-  visibility: hidden;  // ou 'opacity: 0;' para esconder
-  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+  visibility: hidden; // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const DeleteButton = styled(Button)`
-  visibility: hidden;  // ou 'opacity: 0;' para esconder
-  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+  visibility: hidden; // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const TarefaEmLinha = styled.div`
@@ -97,11 +120,9 @@ export const TarefaEmLinha = styled.div`
   font-size: 16px;
   color: #4f3d9e;
 
-  &:hover ${EditButton},
-  &:hover ${DeleteButton} {
-    visibility: visible;  // ou 'opacity: 1;' para mostrar
+  &:hover ${EditButton}, &:hover ${DeleteButton} {
+    visibility: visible; // ou 'opacity: 1;' para mostrar
   }
-
 
   & > div {
     display: flex;
@@ -135,4 +156,3 @@ export const TarefaEmLinha = styled.div`
     }
   }
 `;
-

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { FaPaperclip, FaSave, FaTimes } from "react-icons/fa";
@@ -13,6 +13,7 @@ import {
   InputFile,
   InputFileLabel,
 } from "./style";
+import axios from "axios";
 
 const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
   const [details, setDetails] = useState(tarefa.details);
@@ -25,9 +26,11 @@ const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
       [{ list: "ordered" }, { list: "bullet" }],
       ["bold", "italic", "underline"],
       ["link", "image"],
-      [{ color: [] }, { background: [] }], // isso habilita a paleta de cores
+      [{ color: [] }, { background: [] }], // Habilitar paleta de cores
+      [{ size: ["small", false, "large", "huge"] }], // Tamanho da fonte
     ],
   };
+
 
   const handleDetailsSave = (e) => {
     e.preventDefault();
@@ -35,11 +38,24 @@ const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
     onClose();
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     const fileObjectURL = URL.createObjectURL(file);
-    setFiles([...files, { name: file.name, url: fileObjectURL }]);
+    const newFile = { name: file.name, url: fileObjectURL };
+    setFiles([...files, newFile]);
+
+    await axios.post('http://localhost:5000/upload', newFile);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // newFile is not defined in this context.
+      // await axios.post('http://localhost:5000/upload', newFile);
+    };
+  
+    fetchData();
+}, []);
+
 
 
   return (
@@ -73,12 +89,14 @@ const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
         <div>
           <h4>Anexos:</h4>
           <ul>
-          {files.map((file, index) => (
-            <li key={index}>
-              <a href={file.url} download={file.name}>{file.name}</a>
-            </li>
-          ))}
-        </ul>
+            {files.map((file, index) => (
+              <li key={index}>
+                <a href={file.url} download={file.name}>
+                  {file.name}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </Conteudo>
     </Janela>
