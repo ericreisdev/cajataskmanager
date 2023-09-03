@@ -18,6 +18,8 @@ import FloatingWindow from "./FloatingWindow";
 import OptionsWindow from "./OptionsWindow";
 import { FaTrash, FaEdit, FaSave } from "react-icons/fa";
 import ConfirmModal from "./ConfirmModal";
+import { writeToDatabase, readFromDatabase, uploadToStorage, downloadFromStorage } from "../../firebaseServices";
+
 
 // Definindo o componente Sidebar
 const Sidebar = ({

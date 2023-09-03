@@ -81,13 +81,14 @@ export const Select = styled.select`
 
 export const Button = styled.button`
   padding: 10px 20px;
-  background-color: #8b71e5;
+background-color: #06d6a0;
   width: 20;
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  font-weight: bolder;
   transition: background-color 0.3s ease-in-out;
 
   .plus-button{

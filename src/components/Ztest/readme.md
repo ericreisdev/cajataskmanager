@@ -1,73 +1,36 @@
-Claro, aqui está um guia básico de como usar o Firebase para armazenar arquivos. Vou assumir que você já tem um projeto do Firebase configurado. Se não tiver, você pode criar um [aqui](https://console.firebase.google.com/).
+Peço desculpas pela confusão. Se o objetivo é esconder o URL que é exibido após o upload de um arquivo, mas ainda permitir que os usuários possam fazer o upload, então o código deve ser mais específico.
 
-### 1. Instalar o Firebase no seu projeto
+Em vez de esconder o elemento inteiro, que inclui a funcionalidade de clique para upload, você pode personalizar o retorno do método `uploadImageCallBack` para incluir um elemento que seja visível apenas quando necessário. Isso pode ser feito adicionando lógica condicional ou manipulação de estado para mostrar ou esconder o URL.
 
-Execute o seguinte comando para instalar o SDK do Firebase:
+Por exemplo, você pode adicionar um novo estado para rastrear se o URL deve ser exibido:
 
-```bash
-npm install firebase
+```jsx
+const [showUrl, setShowUrl] = useState(false);
 ```
 
-### 2. Configurar o Firebase
+Então você pode atualizar a função `uploadImageCallBack` para configurar esse estado:
 
-No seu projeto React, crie um novo arquivo, por exemplo `firebaseConfig.js`, e cole suas configurações do Firebase:
-
-```javascript
-import firebase from "firebase/app";
-import "firebase/storage"; // Para armazenamento de arquivos
-
-const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_DOMÍNIO.firebaseapp.com",
-  projectId: "SEU_ID_DO_PROJETO",
-  storageBucket: "SEU_BUCKET_DE_ARMAZENAMENTO.appspot.com",
-  // ...outras opções
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const storage = firebase.storage();
-
-export { storage, firebase as default };
-```
-
-### 3. Usar o Firebase Storage para armazenar arquivos
-
-No seu componente onde você lida com o upload de arquivos, você pode agora importar o `storage` do Firebase.
-
-```javascript
-import { storage } from './firebaseConfig';
-```
-
-### 4. Fazer Upload do Arquivo
-
-Para fazer o upload de um arquivo, você pode usar algo como:
-
-```javascript
-const handleFileChange = (e) => {
-  const file = e.target.files[0];
-  const storageRef = storage.ref(`arquivos/${file.name}`);
-  const uploadTask = storageRef.put(file);
-
-  uploadTask.on('state_changed', 
-    (snapshot) => {
-      // Opcional: Você pode monitorar o progresso do upload aqui
-    }, 
-    (error) => {
-      // Lidar com erro no upload
-    }, 
-    () => {
-      // Finalizado: Recuperar a URL do arquivo
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        setFiles([...files, { name: file.name, url: downloadURL }]);
-      });
-    }
-  );
+```jsx
+const uploadImageCallBack = async (file) => {
+  const url = await uploadToStorage(`imagens/${tarefa.id}/${file.name}`, file);
+  setShowUrl(false); // Definir como false para esconder o URL após o upload
+  return {
+    data: {
+      link: url,
+      component: (
+        <div style={{ width: '100%', overflow: 'hidden' }}>
+          {/* ... */}
+        </div>
+      ),
+    },
+  };
 };
 ```
 
-### 5. Recuperar Arquivos
+Agora, você só mostra o URL quando `showUrl` for verdadeiro:
 
-Para recuperar um arquivo, você precisa da URL de download, que você pode armazenar no estado do React e/ou em um banco de dados para recuperação posterior.
+```jsx
+{showUrl && <label for="file" class="rdw-image-modal-upload-option-label">{url}</label>}
+```
 
-Isso é um guia básico, mas deve lhe dar um bom ponto de partida para armazenar arquivos com o Firebase e React. Certifique-se de consultar a [documentação do Firebase](https://firebase.google.com/docs) para mais detalhes e opções.
+Você pode definir `showUrl` como `true` ou `false` em outros lugares do seu código conforme necessário. Isso permite que você mostre ou esconda o URL com base na lógica que você determinar.

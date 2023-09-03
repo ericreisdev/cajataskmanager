@@ -13,6 +13,8 @@ import {
 } from "./style";
 import DetailedTask from "./DetailedTask/index";
 import { FaPlus, FaInfoCircle, FaTrash, FaEdit, FaSave, FaAlignRight, FaAlignCenter } from "react-icons/fa";
+import { writeToDatabase, readFromDatabase, uploadToStorage, downloadFromStorage } from "../../firebaseServices";
+
 
 const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
@@ -89,6 +91,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
   };
 
   const handleTaskDetailsSave = (taskId, details) => {
+    console.log('Detalhes recebidos:', details);
     const updatedLists = selectedSpace.lists.map((list) =>
       list.id === taskId ? { ...list, details } : list
     );
@@ -157,8 +160,10 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
       <Title>{selectedSpace.title}</Title>
       <ButtonNewList>Nova Lista </ButtonNewList>
       <Button onClick={toggleTaskForm}>
-          <FaPlus />
+          Criar
       </Button>{" "}
+      
+      
       {showTaskForm && (
         <Form onSubmit={handleTaskSubmit}>
           <Input
@@ -191,13 +196,13 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
             <option value="Baixo">Baixo</option>
           </Select>
           <Button type="submit">
-            <FaSave />
+            Salvar
           </Button>
         </Form>
       )}
       <ul>
         {selectedSpace.lists.map((list) => (
-          <li key={list.id}>
+          <li key={list.id} onClick={() => abrirTarefa(selectedSpace, list)}>
             {editMode === list.id ? (
               <>
                 <Input
@@ -253,10 +258,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
                 </TarefaEmLinha>
               </>
             )}
-            <Button onClick={() => abrirTarefa(selectedSpace, list)}>
-              <FaInfoCircle />
-            </Button>
-          </li>
+           </li>
         ))}
       </ul>
     </Container>

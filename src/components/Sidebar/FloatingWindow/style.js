@@ -3,17 +3,20 @@ import styled from "styled-components";
 export const Container = styled.div`
   background-color: #ffffff;
   width: 300px;
-  height: auto; /* Let the height be based on content */
+  height: auto; 
   padding: 20px;
   position: fixed;
-  top: 50%; /* Center the top position */
-  left: 50%; /* Center the left position */
-  transform: translate(-50%, -50%); /* Use transform to perfectly center */
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  border: 1px solid #ccc;  // Adiciona a borda
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  // Adiciona sombreamento
 
-  @media (max-width: 600px) {  /* When screen width is less than or equal to 600px */
-    width: 90%;  /* Give it a little margin on small screens */
+  @media (max-width: 600px) {  
+    width: 90%;  
   }
 `;
+
 
 export const Title = styled.div`
   font-size: 24px;
@@ -39,12 +42,16 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  background-color: #8b71e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
   color: #ffffff;
-  padding: 8px 16px;
+  background-color: #06d6a0;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bolder;
 
   &:hover {
     background-color: #703ce5;
@@ -52,36 +59,36 @@ export const Button = styled.button`
 `;
 
 export const CloseButton = styled.button`
-  background-color: #ffffff;
-  color: #4f3d9e;
-  border: 1px solid #4f3d9e;
-  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px; // Ajuste o padding aqui para que o botão fique proporcional
+  color: #ffffff;
+  background-color: #ff4d4d;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
-  justify-content: center;
-  align-items: center;
 
   &:hover {
-    background-color: #4f3d9e;
-    color: #ffffff;
+    background-color: #cc0000;
   }
 `;
 
 export const SaveCentral = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-
-
+  display: flex;
+  justify-content: flex-start;  // alinhado ao início
+  align-items: center;
 `
 
 export const CloseCentral = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-
-
+  display: flex;
+  justify-content: flex-start;  // alinhado ao início
+  align-items: center;
 `
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+`;
