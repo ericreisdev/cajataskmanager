@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import React, { useState, useRef, useEffect } from "react";
+import ReactQuill from "react-quill"; 
+import "react-quill/dist/quill.snow.css";
 import { FaPaperclip, FaSave, FaTimes } from "react-icons/fa";
-import Draggable from 'react-draggable';  // Importação adicional aqui
 import {
   Janela,
   Conteudo,
@@ -15,73 +13,53 @@ import {
   InputFile,
   InputFileLabel,
 } from "./style";
-import {
-  writeToDatabase,
-  readFromDatabase,
-  uploadToStorage,
-} from "../../../firebaseServices";
-import { Resizable } from "react-resizable";
+import axios from "axios";
+import { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
+import './styles.css';
+import { uploadToStorage, writeToDatabase, readFromDatabase } from "../../../firebaseServices"; 
+
+
+Quill.register('modules/imageResize', ImageResize);
+
 
 const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
-  const [details, setDetails] = useState(tarefa.details || "");
+  const [details, setDetails] = useState(tarefa.details);
+
   const [files, setFiles] = useState([]);
-
-  const [showUrl, setShowUrl] = useState(false);
-
-
-  // Inicializando editorState com EditorState.createEmpty()
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-  const [error, setError] = useState(null);
-
-  // Aqui é onde você trata dos detalhes.
-  useEffect(() => {
-    if (tarefa.details) {
-      try {
-        // Tente fazer o JSON.parse(). Se falhar, irá para o bloco catch.
-        const parsedDetails = JSON.parse(tarefa.details);
-
-        // Se chegou aqui, significa que o JSON.parse foi bem-sucedido.
-        const contentState = convertFromRaw(parsedDetails);
-        const newEditorState = EditorState.createWithContent(contentState);
-        setEditorState(newEditorState);
-      } catch (e) {
-        // Lidando com o erro de JSON.parse
-        if (e instanceof SyntaxError) {
-          console.error("JSON inválido:", tarefa.details);
-        } else {
-          console.error("Outro erro:", e);
-        }
-        setEditorState(EditorState.createEmpty());
-      }
-    }
-  }, [tarefa.details]);
 
   const modules = {
     toolbar: [
-      ["bold", "italic", "underline", "strike"],
-      ["link", "image"],
-      [{ list: "ordered" }, { list: "bullet" }],
+      [{ header: '1' }, { header: '2' }, { font: [] }],
+      [{ size: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' }
+      ],
+      ['link', 'image', 'video'],
+      ['clean']
     ],
+    clipboard: {
+      // toggle to add extra line breaks when pasting HTML:
+      matchVisual: false
+    },
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize']
+    }
   };
 
-  useEffect(() => {
-    const fetchAttachments = async () => {
-      const attachments = await readFromDatabase(`tarefas/${tarefa.id}/anexos`);
-      setFiles(attachments || []);
-    };
-    fetchAttachments();
-  }, [tarefa.id]);
 
   const handleDetailsSave = async (e) => {
     e.preventDefault();
-    const details = JSON.stringify(
-      convertToRaw(editorState.getCurrentContent())
-    );
     onSave(tarefa.id, details);
-    await writeToDatabase(`tarefas/${tarefa.id}/details`, details);
+    await writeToDatabase(`tarefas/${tarefa.id}/details`, details);  // Usando writeToDatabase
     onClose();
   };
+  
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -96,74 +74,51 @@ const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
     }
   };
 
-  const uploadImageCallBack = async (file) => {
-    const url = await uploadToStorage(`imagens/${tarefa.id}/${file.name}`, file);
-    setShowUrl(false); // Definir como false para esconder o URL após o upload
-    return {
-      data: {
-        link: url,
-        component: (
-          <div style={{ width: '100%', overflow: 'hidden' }}>
-            <Resizable
-              width={200}
-              height={200}
-              minConstraints={[100, 100]}
-              maxConstraints={[500, 500]}
-              lockAspectRatio={true}
-              style={{ maxWidth: '100%', maxHeight: '100%' }}
-            >
-              <img 
-                src={url} 
-                alt="example" 
-                width="100%" 
-                height="100%" 
-                style={{ objectFit: 'cover' }}
-                onClick={() => console.log("Imagem clicada")}  
-              />
-            </Resizable>
-          </div>
-        ),
-      },
+  useEffect(() => {
+    const fetchData = async () => {
+      // Carregar anexos do banco de dados
+      const fetchedFiles = await readFromDatabase(`tarefas/${tarefa.id}/anexos`);
+      
+      if (fetchedFiles) {
+        // Atualizar o estado com os anexos recuperados
+        setFiles(fetchedFiles);
+      }
     };
-  };
   
+    fetchData();
+  }, []);
+  
+
+
 
   return (
     <Janela onClick={onClose}>
-      
       <Conteudo onClick={(e) => e.stopPropagation()}>
         <NomePasta>{pasta}</NomePasta>
         <NomeTarefa>{tarefa.nome}</NomeTarefa>
         <form onSubmit={handleDetailsSave}>
-          <Editor
-            editorState={editorState}
-            onEditorStateChange={setEditorState}
-            toolbar={{
-              inline: { inDropdown: true },
-              list: { inDropdown: true },
-              textAlign: { inDropdown: true },
-              link: { inDropdown: true },
-              history: { inDropdown: true },
-              image: {
-                uploadCallback: uploadImageCallBack,
-                alt: { present: true, mandatory: false },
-              },
-            }}
+          <ReactQuill
+            className="editor-quill"
+            value={details}
+            modules={modules}
+            onChange={setDetails}
           />
-          {showUrl && <label for="file" class="rdw-image-modal-upload-option-label">{url}</label>}
-
-          <div>
-            {/* Adicionado aqui: ícone e campo de input para anexar arquivos */}
-            <InputFile type="file" id="fileInput" onChange={handleFileUpload} />
-            <InputFileLabel htmlFor="fileInput">
-              <FaPaperclip /> Anexar
-            </InputFileLabel>
-            {/* Fim da adição */}
-
-            <Botao type="submit">SALVAR</Botao>
-            <BotaoFechar onClick={onClose}>
-              <FaTimes />
-            </BotaoFechar>
+          <div className="align-buttons">
+          <InputFileLabel htmlFor="fileInput">
+            <FaPaperclip />
+          </InputFileLabel>
+          <InputFile
+            type="file"
+            id="fileInput"
+            onChange={handleFileUpload}
+            style={{ display: "none" }}
+          />
+          <Botao type="submit">
+            SALVAR
+          </Botao>
+          <BotaoFechar onClick={onClose}>
+            <FaTimes></FaTimes>
+          </BotaoFechar>
           </div>
         </form>
         <div>
@@ -171,13 +126,9 @@ const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
           <ul>
             {files.map((file, index) => (
               <li key={index}>
-                {file.url ? (
-                  <a href={file.url} target="_blank" rel="noopener noreferrer">
-                    {file.name}
-                  </a>
-                ) : (
-                  <span>{file.name} (Não disponível)</span>
-                )}
+                <a href={file.url} download={file.name}>
+                  {file.name}
+                </a>
               </li>
             ))}
           </ul>

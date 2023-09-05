@@ -10,6 +10,8 @@ import {
   DeleteButton,
   TarefaEmLinha,
   ButtonNewList,
+  InputWrapper,
+  SaveButton,
 } from "./style";
 import DetailedTask from "./DetailedTask/index";
 import { FaPlus, FaInfoCircle, FaTrash, FaEdit, FaSave, FaAlignRight, FaAlignCenter } from "react-icons/fa";
@@ -45,7 +47,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
     name: "",
     responsibility: "",
     dueDate: "",
-    priority: "Alto",
+    observation: "",
   });
 
   const [editMode, setEditMode] = useState(null);
@@ -54,7 +56,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
     name: "",
     responsibility: "",
     dueDate: "",
-    priority: "Alto",
+    observation: "",
   });
 
   const formatDate = (dateString) => {
@@ -68,6 +70,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
 
   const handleTaskChange = (e) => {
     const { name, value } = e.target;
+    console.log("Mudança no campo: ", name, value);  // Adicionar esta linha
     setNewTask((prevTask) => ({
       ...prevTask,
       [name]: value,
@@ -76,6 +79,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
 
   const handleTaskSubmit = (e) => {
     e.preventDefault();
+    console.log("Nova tarefa: ", newTask);  // Adicionar esta linha
 
     if (newTask.name.trim() === "" || newTask.responsibility.trim() === "") {
       alert("Os campos nome e responsável são obrigatórios");
@@ -86,7 +90,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
       name: "",
       responsibility: "",
       dueDate: "",
-      priority: "Alto",
+      observation: "",
     });
   };
 
@@ -166,43 +170,57 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
       
       {showTaskForm && (
         <Form onSubmit={handleTaskSubmit}>
-          <Input
-            type="text"
-            name="name"
-            value={newTask.name}
-            onChange={handleTaskChange}
-            placeholder="Nome da Tarefa"
-          />
-          <Input
-            type="text"
-            name="responsibility"
-            value={newTask.responsibility}
-            onChange={handleTaskChange}
-            placeholder="Responsável"
-          />
-          <Input
-            type="date"
-            name="dueDate"
-            value={newTask.dueDate}
-            onChange={handleTaskChange}
-          />
-          <Select
-            name="priority"
-            value={newTask.priority}
-            onChange={handleTaskChange}
-          >
-            <option value="Alto">Alto</option>
-            <option value="Médio">Médio</option>
-            <option value="Baixo">Baixo</option>
-          </Select>
-          <Button type="submit">
-            Salvar
-          </Button>
+           <InputWrapper>
+      <label>Nome da Tarefa</label>
+      <Input
+        type="text"
+        name="name"
+        value={newTask.name}
+        onChange={handleTaskChange}
+        placeholder="Nome da Tarefa"
+      />
+    </InputWrapper>
+
+    <InputWrapper>
+      <label>Responsável</label>
+      <Input
+        type="text"
+        name="responsibility"
+        value={newTask.responsibility}
+        onChange={handleTaskChange}
+        placeholder="Responsável"
+      />
+    </InputWrapper>
+
+    <InputWrapper>
+      <label>Data de Vencimento</label>
+      <Input
+        type="date"
+        name="dueDate"
+        value={newTask.dueDate}
+        onChange={handleTaskChange}
+      />
+    </InputWrapper>
+
+    <InputWrapper>
+      <label>Observações</label>
+      <Input
+        name="observation"
+        value={newTask.observation}
+        onChange={handleTaskChange}
+        placeholder="Observações"
+      >
+      
+      </Input>
+    </InputWrapper>
+    <SaveButton type="submit">
+            SALVAR
+          </SaveButton>
         </Form>
       )}
       <ul>
         {selectedSpace.lists.map((list) => (
-          <li key={list.id} onClick={() => abrirTarefa(selectedSpace, list)}>
+          <li key={list.id} onDoubleClick={() => abrirTarefa(selectedSpace, list)}>
             {editMode === list.id ? (
               <>
                 <Input
@@ -222,15 +240,12 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
                   value={updatedTask.dueDate}
                   onChange={(e) => handleTaskUpdate("dueDate", e.target.value)}
                 />
-                <Select
-                  value={updatedTask.priority}
-                  onChange={(e) => handleTaskUpdate("priority", e.target.value)}
-                >
-                  <option value="Alto">Alto</option>
-                  <option value="Médio">Médio</option>
-                  <option value="Baixo">Baixo</option>
-                </Select>
-                <Button onClick={handleTaskSave}>Salvar</Button>
+                <Input
+                  value={updatedTask.observation}
+                  onChange={(e) => handleTaskUpdate("observation", e.target.value)}
+                >              
+                </Input>
+                <SaveButton onClick={handleTaskSave}>SALVAR</SaveButton>
               </>
             ) : (
               <>
@@ -244,7 +259,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
                       Data: {formatDate(list.dueDate)}
                     </p>
                     <p title="Clique para editar">
-                      Prioridade: {list.priority}
+                      Observações: {list.observation}
                     </p>
                   </div>
                   <div>

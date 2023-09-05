@@ -22,11 +22,12 @@ export const Conteudo = styled.div`
   overflow-y: auto;  // Adicionado para permitir barra de rolagem
   max-height: calc(100vh - 100px);  // Adicionado para limitar a altura
 
-  .button-container{
+  .align-buttons{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-top: 10px; 
+    margin-bottom: 10px;
   }
 
   .editor-quill .ql-container {
@@ -103,5 +104,6 @@ export const InputFileLabel = styled.label`
     background-color: #703ce5;
   }
 `;
+
 
 

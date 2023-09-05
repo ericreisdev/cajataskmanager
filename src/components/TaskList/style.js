@@ -22,8 +22,6 @@ export const ButtonNewList = styled.span`
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   font-weight: bolder;
-
-  
 `;
 
 export const Title = styled.h1`
@@ -81,7 +79,7 @@ export const Select = styled.select`
 
 export const Button = styled.button`
   padding: 10px 20px;
-background-color: #06d6a0;
+  background-color: #06d6a0;
   width: 20;
   color: white;
   border: none;
@@ -91,7 +89,7 @@ background-color: #06d6a0;
   font-weight: bolder;
   transition: background-color 0.3s ease-in-out;
 
-  .plus-button{
+  .plus-button {
     width: 70px;
   }
 
@@ -156,4 +154,27 @@ export const TarefaEmLinha = styled.div`
       margin-bottom: 10px;
     }
   }
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  label {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input {
+    margin-top: 0;
+  }
+`;
+
+export const SaveButton = styled(Button)`
+  margin-top: 50px;
+  max-height: 6rem;
+  height: 100%;
+  max-width: 6rem;/ Especifique a largura máxima que você deseja
+  width: 100%; // Ocupará todo o espaço disponível até o max-width
+  
 `;
