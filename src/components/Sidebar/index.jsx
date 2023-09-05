@@ -82,6 +82,8 @@ const Sidebar = ({
     setSelectedSpaceId(spaces[selectedIndex].id); // definimos o espaço selecionado como o espaço clicado
   };
 
+  
+
   return (
     <Container>
       <Nav>

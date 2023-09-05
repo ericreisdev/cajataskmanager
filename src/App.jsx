@@ -11,7 +11,7 @@ import Sidebar from "./components/Sidebar/index";
 import TaskList from "./components/TaskList";
 
 const App = () => {
-  const navItems = ["Home", "Sobre", "Contato"];
+  const navItems = ["Home", "Sobre", "Contatos"];
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
   const [spaces, setSpaces] = useState(() => {
