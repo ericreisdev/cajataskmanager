@@ -96,6 +96,10 @@ export const Button = styled.button`
   &:hover {
     background-color: #703ce5;
   }
+
+  .open-button{
+    margin-left: auto; // Isso vai empurrar o botão para a direita
+  }
 `;
 
 export const EditButton = styled(Button)`
@@ -143,6 +147,13 @@ export const TarefaEmLinha = styled.div`
 
   & > div > div > Button {
     margin-left: 10px;
+  }
+
+  & > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1; // Adicionado para ocupar todo o espaço disponível
   }
 
   @media (max-width: 768px) {
