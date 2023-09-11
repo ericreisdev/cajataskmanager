@@ -19,13 +19,22 @@ export const Conteudo = styled.div`
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;  // Adicionado para permitir barra de rolagem
+  max-height: calc(100vh - 100px);  // Adicionado para limitar a altura
 
+  .align-buttons{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px; 
+    margin-bottom: 10px;
+  }
 
   .editor-quill .ql-container {
-  height: 400px !important;
-}
-
+    height: 400px !important;
+  }
 `;
+
 
 export const NomePasta = styled.h2`
   font-size: 24px;
@@ -49,12 +58,13 @@ export const CaixaTexto = styled.textarea`
 `;
 
 export const Botao = styled.button`
-  padding: 10px 20px;
+  padding: 5px 10px;
   color: #ffffff;
-  background-color: #8b71e5;
+  background-color: #06d6a0;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bolder;
 
   &:hover {
     background-color: #703ce5;
@@ -62,7 +72,7 @@ export const Botao = styled.button`
 `;
 
 export const BotaoFechar = styled.button`
-  padding: 10px 20px;
+  padding: 5px 10px;
   color: #ffffff;
   background-color: #ff4d4d;
   border: none;
@@ -82,7 +92,7 @@ export const InputFile = styled.input`
 export const InputFileLabel = styled.label`
   display: inline-flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 5px 10px;
   color: #ffffff;
   background-color: #8b71e5;
   border: none;
@@ -94,5 +104,6 @@ export const InputFileLabel = styled.label`
     background-color: #703ce5;
   }
 `;
+
 
 

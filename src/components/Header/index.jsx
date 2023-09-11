@@ -4,7 +4,7 @@ import { Container, Logo, Nav, NavItem } from './style';
 const Header = ({ logoUrl, navItems }) => {
   return (
     <Container>
-      <Logo src={logoUrl} alt="Logo" />
+      <Logo  alt="Logo" />
       <Nav>
         {navItems.map((item, index) => (
           <NavItem key={index}>{item}</NavItem>     

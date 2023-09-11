@@ -6,7 +6,23 @@ export const Container = styled.div`
   padding: 20px;
 `;
 
+export const ButtonNewList = styled.span`
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: white;
 
+  color: #8b71e5;
+  font-size: 72px;
+  margin-right: -15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 22px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-weight: bolder;
+`;
 
 export const Title = styled.h1`
   font-size: 28px;
@@ -29,7 +45,7 @@ export const Form = styled.form`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    
+
     & > * {
       margin-right: 0;
     }
@@ -63,27 +79,37 @@ export const Select = styled.select`
 
 export const Button = styled.button`
   padding: 10px 20px;
-  background-color: #8b71e5;
+  background-color: #06d6a0;
+  width: 20;
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  font-weight: bolder;
   transition: background-color 0.3s ease-in-out;
+
+  .plus-button {
+    width: 70px;
+  }
 
   &:hover {
     background-color: #703ce5;
   }
+
+  .open-button{
+    margin-left: auto; // Isso vai empurrar o botão para a direita
+  }
 `;
 
 export const EditButton = styled(Button)`
-  visibility: hidden;  // ou 'opacity: 0;' para esconder
-  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+  visibility: hidden; // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const DeleteButton = styled(Button)`
-  visibility: hidden;  // ou 'opacity: 0;' para esconder
-  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+  visibility: hidden; // ou 'opacity: 0;' para esconder
+  transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const TarefaEmLinha = styled.div`
@@ -97,11 +123,9 @@ export const TarefaEmLinha = styled.div`
   font-size: 16px;
   color: #4f3d9e;
 
-  &:hover ${EditButton},
-  &:hover ${DeleteButton} {
-    visibility: visible;  // ou 'opacity: 1;' para mostrar
+  &:hover ${EditButton}, &:hover ${DeleteButton} {
+    visibility: visible; // ou 'opacity: 1;' para mostrar
   }
-
 
   & > div {
     display: flex;
@@ -125,6 +149,13 @@ export const TarefaEmLinha = styled.div`
     margin-left: 10px;
   }
 
+  & > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1; // Adicionado para ocupar todo o espaço disponível
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
@@ -136,3 +167,25 @@ export const TarefaEmLinha = styled.div`
   }
 `;
 
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  label {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input {
+    margin-top: 0;
+  }
+`;
+
+export const SaveButton = styled(Button)`
+  margin-top: 50px;
+  max-height: 6rem;
+  height: 100%;
+  max-width: 6rem;/ Especifique a largura máxima que você deseja
+  width: 100%; // Ocupará todo o espaço disponível até o max-width
+  
+`;

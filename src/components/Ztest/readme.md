@@ -1,27 +1,38 @@
-Se você está tentando centralizar o `CloseButton`, o problema pode ser que a propriedade `justify-content: center` e `align-items: center` estão sendo aplicadas ao `CloseButton` em si, mas essas propriedades só afetam os elementos filhos do container, não o container em si.
+Claro, para fazer com que o botão `.open-button` fique no final da div e não colado no ícone da lixeira (FaTrash), você pode utilizar propriedades do CSS Flexbox no estilo da div que os contém. Aqui vão as modificações que você pode fazer:
 
-Para centralizar o `CloseButton`, você pode envolver o `CloseButton` em um novo container `div` e aplicar as propriedades de alinhamento (`justify-content` e `align-items`) a esse container.
-
-Aqui está uma maneira de fazer isso:
-
-1. Crie um styled component chamado `ButtonContainer`:
+Primeiramente, atualize o estilo `TarefaEmLinha` no seu arquivo de estilos:
 
 ```javascript
-export const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const TarefaEmLinha = styled.div`
+  // ... (outros estilos)
+
+  & > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1; // Adicionado para ocupar todo o espaço disponível
+  }
+
+  // ... (outros estilos)
 `;
 ```
 
-2. Agora, envolva seu `CloseButton` neste `ButtonContainer` em seu componente React:
+Com a propriedade `flex-grow: 1`, essa div tentará ocupar todo o espaço disponível, empurrando o botão `.open-button` para o final.
+
+Agora, vamos estilizar especificamente o `.open-button` para ter certeza de que ele não ficará colado aos outros botões. Adicione este estilo no seu componente `Button`:
 
 ```javascript
-<ButtonContainer>
-  <CloseButton>Fechar</CloseButton>
-</ButtonContainer>
+export const Button = styled.button`
+  // ... (outros estilos)
+
+  &.open-button {
+    margin-left: auto; // Isso vai empurrar o botão para a direita
+  }
+
+  // ... (outros estilos)
+`;
 ```
 
-O `ButtonContainer` tem `display: flex;` e `justify-content: center; align-items: center;` para centralizar o `CloseButton` dentro dele.
+Com a propriedade `margin-left: auto`, o botão `.open-button` será empurrado para a direita, ocupando o espaço final da div.
 
-Isso deve centralizar o seu `CloseButton`. Se o `CloseButton` ainda não estiver centralizado, você pode querer verificar se outras partes do seu código CSS ou JSX estão afetando seu layout.
+Agora, o botão "Abrir" deve aparecer no final da div, separado do ícone da lixeira. Espero que isso ajude! 😄 Se você tiver mais alguma dúvida ou precisar de mais ajustes, fique à vontade para perguntar! 🚀

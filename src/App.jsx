@@ -6,12 +6,11 @@ import {
   TaskListContainer,
 } from "./GlobalStyle";
 import Header from "./components/Header";
-import logoUrl from "./assets/img/caja sm ii.png";
 import Sidebar from "./components/Sidebar/index";
 import TaskList from "./components/TaskList";
 
 const App = () => {
-  const navItems = ["Home", "Sobre", "Contato"];
+  const navItems = ["Home", "Sobre", "Contatos"];
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
   const [spaces, setSpaces] = useState(() => {
@@ -107,7 +106,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Header logoUrl={logoUrl} navItems={navItems} />
+      <Header  navItems={navItems} />
       <MainContainer>
         <SidebarContainer>
           <Sidebar

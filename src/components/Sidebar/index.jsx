@@ -18,6 +18,8 @@ import FloatingWindow from "./FloatingWindow";
 import OptionsWindow from "./OptionsWindow";
 import { FaTrash, FaEdit, FaSave } from "react-icons/fa";
 import ConfirmModal from "./ConfirmModal";
+import { writeToDatabase, readFromDatabase, uploadToStorage, downloadFromStorage } from "../../firebaseServices";
+
 
 // Definindo o componente Sidebar
 const Sidebar = ({
@@ -79,6 +81,8 @@ const Sidebar = ({
   const toggleOptionsWindow = (selectedIndex) => {
     setSelectedSpaceId(spaces[selectedIndex].id); // definimos o espaço selecionado como o espaço clicado
   };
+
+  
 
   return (
     <Container>
