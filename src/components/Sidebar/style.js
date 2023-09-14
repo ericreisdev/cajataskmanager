@@ -69,8 +69,7 @@ export const DeleteButton = styled.button`
   border-radius: 5px;
   padding: 4px;
   margin-left: 5px; // Adicionei uma margem à esquerda para espaçar do título
-  visibility: hidden;  // ou 'opacity: 0;' para esconder
-  transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
+    transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
 
   &:hover {
     background-color: #cc0000;
@@ -89,7 +88,7 @@ export const EditFolder = styled.button`
   &:hover {
     background-color: #4f3d9e;
   }
-  visibility: hidden;  // ou 'opacity: 0;' para esconder
+  
   transition: visibility 0.3s ease-in-out;  // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
