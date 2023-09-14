@@ -4,6 +4,10 @@ export const Container = styled.div`
   background-color: #ffffff;
   width: 100%;
   padding: 20px;
+
+  ul{
+    list-style-type: none;
+  }
 `;
 
 export const ButtonNewList = styled.span`
@@ -103,13 +107,12 @@ export const Button = styled.button`
 `;
 
 export const EditButton = styled(Button)`
-  visibility: hidden; // ou 'opacity: 0;' para esconder
+  
   transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const DeleteButton = styled(Button)`
-  visibility: hidden; // ou 'opacity: 0;' para esconder
-  transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
+    transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const TarefaEmLinha = styled.div`
@@ -122,6 +125,10 @@ export const TarefaEmLinha = styled.div`
   border-radius: 5px;
   font-size: 16px;
   color: #4f3d9e;
+  cursor: pointer;
+  margin-left: 20px;
+  
+
 
   &:hover ${EditButton}, &:hover ${DeleteButton} {
     visibility: visible; // ou 'opacity: 1;' para mostrar
@@ -137,6 +144,8 @@ export const TarefaEmLinha = styled.div`
     margin-right: 20px;
     white-space: nowrap;
     flex-grow: 1;
+    font-weight: bolder;
+    overflow-wrap: break-word;
   }
 
   & > div > div {

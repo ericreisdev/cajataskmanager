@@ -126,7 +126,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
 
   const handleDeleteTask = (taskId) => {
     const confirmDelete = window.confirm(
-      "Você tem certeza que deseja excluir esta lista?"
+      "Você tem certeza que deseja excluir esta tarefa?"
     );
     if (confirmDelete) {
       const updatedLists = selectedSpace.lists.filter(
@@ -173,8 +173,9 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         />
       )}
       <Title>{selectedSpace.title}</Title>
-      <ButtonNewList>Nova Lista </ButtonNewList>
-      <Button onClick={toggleTaskForm}>Criar</Button>{" "}
+      <Button style={{marginBottom: "10px"}} onClick={toggleTaskForm}>Nova Tarefa</Button>{" "}
+      <ButtonNewList></ButtonNewList>
+      
       {showTaskForm && (
         <Form onSubmit={handleTaskSubmit}>
           <InputWrapper>
@@ -258,32 +259,36 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
               <>
                 <TarefaEmLinha>
                   <div>
-                    <p title="Clique para editar">Nome: {list.name}</p>
+                    <p style={{fontWeight: 'bolder', backgroundColor: '#06d6a0', color: 'white', padding: '10px', borderRadius: '7px'}} title="Clique para editar"> {list.name}</p>
+                    <div>
+                      
+                    </div>
                     <p title="Clique para editar">
                       Responsável: {list.responsibility}
                     </p>
                     <p title="Clique para editar">
                       Data: {formatDate(list.dueDate)}
                     </p>
-                    <p title="Clique para editar">
+                    <p style={{display: 'flex', flex: 'flex-wrap'}} title="Clique para editar">
                       Observações: {list.observation}
                     </p>
                   </div>
                   <div>
+                  <Button
+                        
+                        onClick={() => abrirTarefa(selectedSpace, list)}
+                      >
+                        Abrir
+                      </Button>
                     <EditButton onClick={() => handleEditTask(list.id)}>
                       <FaEdit />
                     </EditButton>
                     <DeleteButton onClick={() => handleDeleteTask(list.id)}>
                       <FaTrash />
                     </DeleteButton>
-                    <div style={{ marginLeft: "auto" }}>
-                      <Button
-                        className="open-button"
-                        onClick={() => abrirTarefa(selectedSpace, list)}
-                      >
-                        Abrir
-                      </Button>
-                    </div>
+                    
+                      
+                    
                   </div>
                 </TarefaEmLinha>
               </>
