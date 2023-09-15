@@ -12,7 +12,7 @@ const OptionsWindow = ({ isOpen, onClose, selectedSpace, onNewListSubmit }) => {
       <Options>
         {selectedSpace && (
           <button onClick={() => handleOptionClick("PastaBlaster")}>
-            Lista
+            Listas
           </button>
         )}
       </Options>
