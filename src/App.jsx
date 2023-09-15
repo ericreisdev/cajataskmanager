@@ -9,39 +9,28 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar/index";
 import TaskList from "./components/TaskList";
 
-// Componente principal da aplicação
 const App = () => {
-  // Itens de navegação para o Header
   const navItems = ["Home", "Sobre", "Contatos"];
-
-  // Itens para a Sidebar
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
-  // Estado para manter informações sobre os espaços
-  // Inicializado com valores do localStorage, se disponíveis
+  // Usar um estado inicial mais seguro para espaços, como um array vazio
+  // const [spaces, setSpaces] = useState([]);
   const [spaces, setSpaces] = useState(() => {
     const savedSpaces = localStorage.getItem("spaces");
     return savedSpaces ? JSON.parse(savedSpaces) : [];
   });
 
-  // Estado para gerenciar o espaço selecionado
   const [selectedSpaceId, setSelectedSpaceId] = useState(null);
-
-  // Estado para gerenciar o espaço em edição
   const [editingSpaceId, setEditingSpaceId] = useState(null);
-
-  // Estado para manter o valor do espaço em edição
   const [editingSpaceValue, setEditingSpaceValue] = useState("");
 
-  // Função para iniciar a edição de um espaço
   const handleEditSpace = (spaceId, spaceTitle) => {
     setEditingSpaceId(spaceId);
     setEditingSpaceValue(spaceTitle);
   };
 
-  // Função para salvar a edição de um espaço
   const handleSaveEdit = () => {
-    // Verificação para evitar valores vazios ou só com espaços
+    // Adicionei uma verificação para garantir que o valor não está vazio ou só com espaços
     if (editingSpaceValue.trim() !== "") {
       setSpaces((prevSpaces) =>
         prevSpaces.map((space) =>
@@ -51,29 +40,35 @@ const App = () => {
         )
       );
     }
-    // Reset do estado de edição
     setEditingSpaceId(null)
   };
 
-  // Efeito para atualizar o localStorage toda vez que 'spaces' é atualizado
+  // Este useEffect é redundante, já que você já está inicializando "spaces" com valores do localStorage
+  // useEffect(() => {
+  //   const savedSpaces = JSON.parse(localStorage.getItem("spaces"));
+  //   if (savedSpaces) {
+  //     setSpaces(savedSpaces);
+  //   }
+  // }, []);
+
   useEffect(() => {
     localStorage.setItem("spaces", JSON.stringify(spaces));
   }, [spaces]);
 
-  // Função para adicionar um novo espaço
   const handleNewSpaceSubmit = (newSpaceInput) => {
+    // Simplifiquei a verificação de input vazio
     if (newSpaceInput.trim() !== "") {
       const newSpace = {
         id: Date.now(),
         title: newSpaceInput,
         lists: [],
       };
+
       setSpaces((prevSpaces) => [...prevSpaces, newSpace]);
       setSelectedSpaceId(newSpace.id);
     }
   };
 
-  // Função para adicionar uma nova lista a um espaço
   const handleNewListSubmit = (spaceId, newListInput) => {
     if (newListInput.trim() !== "") {
       const newList = {
@@ -81,6 +76,7 @@ const App = () => {
         title: newListInput,
         spaceId: spaceId,
       };
+
       setSpaces((prevSpaces) =>
         prevSpaces.map((space) =>
           space.id === spaceId
@@ -91,7 +87,7 @@ const App = () => {
     }
   };
 
-  // Função para adicionar uma nova tarefa a um espaço
+  // Adicionei uma verificação de input vazio
   const handleTaskSubmit = (spaceId, newTask) => {
     if (newTask && newTask.trim() !== "") {
       setSpaces((prevSpaces) =>
@@ -107,11 +103,10 @@ const App = () => {
     }
   };
 
-  // Renderização do componente
   return (
     <>
       <GlobalStyle />
-      <Header navItems={navItems} />
+      <Header  navItems={navItems} />
       <MainContainer>
         <SidebarContainer>
           <Sidebar
