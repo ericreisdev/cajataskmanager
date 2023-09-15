@@ -9,48 +9,58 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar/index";
 import TaskList from "./components/TaskList";
 
+// Componente principal da aplicação
 const App = () => {
+  // Itens de navegação para o Header
   const navItems = ["Home", "Sobre", "Contatos"];
+
+  // Itens para a Sidebar
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
+  // Estado para manter informações sobre os espaços
+  // Inicializado com valores do localStorage, se disponíveis
   const [spaces, setSpaces] = useState(() => {
     const savedSpaces = localStorage.getItem("spaces");
     return savedSpaces ? JSON.parse(savedSpaces) : [];
   });
 
+  // Estado para gerenciar o espaço selecionado
   const [selectedSpaceId, setSelectedSpaceId] = useState(null);
+
+  // Estado para gerenciar o espaço em edição
   const [editingSpaceId, setEditingSpaceId] = useState(null);
+
+  // Estado para manter o valor do espaço em edição
   const [editingSpaceValue, setEditingSpaceValue] = useState("");
 
+  // Função para iniciar a edição de um espaço
   const handleEditSpace = (spaceId, spaceTitle) => {
     setEditingSpaceId(spaceId);
     setEditingSpaceValue(spaceTitle);
   };
 
+  // Função para salvar a edição de um espaço
   const handleSaveEdit = () => {
-    setSpaces((prevSpaces) =>
-      prevSpaces.map((space) =>
-        space.id === editingSpaceId
-          ? { ...space, title: editingSpaceValue }
-          : space
-      )
-    );
+    // Verificação para evitar valores vazios ou só com espaços
+    if (editingSpaceValue.trim() !== "") {
+      setSpaces((prevSpaces) =>
+        prevSpaces.map((space) =>
+          space.id === editingSpaceId
+            ? { ...space, title: editingSpaceValue }
+            : space
+        )
+      );
+    }
+    // Reset do estado de edição
     setEditingSpaceId(null)
   };
 
-  // useEffect para carregar os 'spaces' do localStorage quando o componente é montado
-  useEffect(() => {
-    const savedSpaces = JSON.parse(localStorage.getItem("spaces"));
-    if (savedSpaces) {
-      setSpaces(savedSpaces);
-    }
-  }, []);
-
-  // useEffect para atualizar os 'spaces' no localStorage quando eles mudam
+  // Efeito para atualizar o localStorage toda vez que 'spaces' é atualizado
   useEffect(() => {
     localStorage.setItem("spaces", JSON.stringify(spaces));
   }, [spaces]);
 
+  // Função para adicionar um novo espaço
   const handleNewSpaceSubmit = (newSpaceInput) => {
     if (newSpaceInput.trim() !== "") {
       const newSpace = {
@@ -58,17 +68,12 @@ const App = () => {
         title: newSpaceInput,
         lists: [],
       };
-
-      setSpaces((prevSpaces) => {
-        const updatedSpaces = [...prevSpaces, newSpace];
-        localStorage.setItem("spaces", JSON.stringify(updatedSpaces));
-        return updatedSpaces;
-      });
-
+      setSpaces((prevSpaces) => [...prevSpaces, newSpace]);
       setSelectedSpaceId(newSpace.id);
     }
   };
 
+  // Função para adicionar uma nova lista a um espaço
   const handleNewListSubmit = (spaceId, newListInput) => {
     if (newListInput.trim() !== "") {
       const newList = {
@@ -83,12 +88,12 @@ const App = () => {
             : space
         )
       );
-      localStorage.setItem("spaces", JSON.stringify([...spaces]));
     }
   };
 
+  // Função para adicionar uma nova tarefa a um espaço
   const handleTaskSubmit = (spaceId, newTask) => {
-    if (newTask) {
+    if (newTask && newTask.trim() !== "") {
       setSpaces((prevSpaces) =>
         prevSpaces.map((space) =>
           space.id === spaceId
@@ -99,14 +104,14 @@ const App = () => {
             : space
         )
       );
-      localStorage.setItem("spaces", JSON.stringify([...spaces]));
     }
   };
 
+  // Renderização do componente
   return (
     <>
       <GlobalStyle />
-      <Header  navItems={navItems} />
+      <Header navItems={navItems} />
       <MainContainer>
         <SidebarContainer>
           <Sidebar
