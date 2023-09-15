@@ -125,6 +125,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
   };
 
   const handleDeleteTask = (taskId) => {
+    
     const confirmDelete = window.confirm(
       "Você tem certeza que deseja excluir esta tarefa?"
     );
@@ -173,7 +174,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         />
       )}
       <Title>{selectedSpace.title}</Title>
-      <Button style={{marginBottom: "10px"}} onClick={toggleTaskForm}>Nova Tarefa</Button>{" "}
+      <Button style={{marginBottom: ""}} onClick={toggleTaskForm}>Nova Tarefa</Button>{" "}
       <ButtonNewList></ButtonNewList>
       
       {showTaskForm && (
@@ -226,7 +227,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         {selectedSpace.lists.map((list) => (
           <li
             key={list.id}
-            onClick={() => abrirTarefa(selectedSpace, list)}
+            onDoubleClick={() => abrirTarefa(selectedSpace, list)}
           >
             {editMode === list.id ? (
               <>

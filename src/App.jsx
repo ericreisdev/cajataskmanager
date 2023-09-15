@@ -13,8 +13,6 @@ const App = () => {
   const navItems = ["Home", "Sobre", "Contatos"];
   const sidebarItems = ["Notificações", "Metas", "Espaços"];
 
-  // Usar um estado inicial mais seguro para espaços, como um array vazio
-  // const [spaces, setSpaces] = useState([]);
   const [spaces, setSpaces] = useState(() => {
     const savedSpaces = localStorage.getItem("spaces");
     return savedSpaces ? JSON.parse(savedSpaces) : [];
@@ -30,33 +28,30 @@ const App = () => {
   };
 
   const handleSaveEdit = () => {
-    // Adicionei uma verificação para garantir que o valor não está vazio ou só com espaços
-    if (editingSpaceValue.trim() !== "") {
-      setSpaces((prevSpaces) =>
-        prevSpaces.map((space) =>
-          space.id === editingSpaceId
-            ? { ...space, title: editingSpaceValue }
-            : space
-        )
-      );
-    }
+    setSpaces((prevSpaces) =>
+      prevSpaces.map((space) =>
+        space.id === editingSpaceId
+          ? { ...space, title: editingSpaceValue }
+          : space
+      )
+    );
     setEditingSpaceId(null)
   };
 
-  // Este useEffect é redundante, já que você já está inicializando "spaces" com valores do localStorage
-  // useEffect(() => {
-  //   const savedSpaces = JSON.parse(localStorage.getItem("spaces"));
-  //   if (savedSpaces) {
-  //     setSpaces(savedSpaces);
-  //   }
-  // }, []);
+  // useEffect para carregar os 'spaces' do localStorage quando o componente é montado
+  useEffect(() => {
+    const savedSpaces = JSON.parse(localStorage.getItem("spaces"));
+    if (savedSpaces) {
+      setSpaces(savedSpaces);
+    }
+  }, []);
 
+  // useEffect para atualizar os 'spaces' no localStorage quando eles mudam
   useEffect(() => {
     localStorage.setItem("spaces", JSON.stringify(spaces));
   }, [spaces]);
 
   const handleNewSpaceSubmit = (newSpaceInput) => {
-    // Simplifiquei a verificação de input vazio
     if (newSpaceInput.trim() !== "") {
       const newSpace = {
         id: Date.now(),
@@ -64,7 +59,12 @@ const App = () => {
         lists: [],
       };
 
-      setSpaces((prevSpaces) => [...prevSpaces, newSpace]);
+      setSpaces((prevSpaces) => {
+        const updatedSpaces = [...prevSpaces, newSpace];
+        localStorage.setItem("spaces", JSON.stringify(updatedSpaces));
+        return updatedSpaces;
+      });
+
       setSelectedSpaceId(newSpace.id);
     }
   };
@@ -76,7 +76,6 @@ const App = () => {
         title: newListInput,
         spaceId: spaceId,
       };
-
       setSpaces((prevSpaces) =>
         prevSpaces.map((space) =>
           space.id === spaceId
@@ -84,12 +83,12 @@ const App = () => {
             : space
         )
       );
+      localStorage.setItem("spaces", JSON.stringify([...spaces]));
     }
   };
 
-  // Adicionei uma verificação de input vazio
   const handleTaskSubmit = (spaceId, newTask) => {
-    if (newTask && newTask.trim() !== "") {
+    if (newTask) {
       setSpaces((prevSpaces) =>
         prevSpaces.map((space) =>
           space.id === spaceId
@@ -100,6 +99,7 @@ const App = () => {
             : space
         )
       );
+      localStorage.setItem("spaces", JSON.stringify([...spaces]));
     }
   };
 

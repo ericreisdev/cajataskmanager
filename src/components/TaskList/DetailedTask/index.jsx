@@ -24,6 +24,9 @@ Quill.register('modules/imageResize', ImageResize);
 
 
 const DetailedTask = ({ pasta, tarefa, onClose, onSave }) => {
+  if(!tarefa){
+    return null;
+  }
   const [details, setDetails] = useState(tarefa.details);
 
   const [files, setFiles] = useState([]);
