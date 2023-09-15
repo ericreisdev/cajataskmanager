@@ -226,7 +226,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         {selectedSpace.lists.map((list) => (
           <li
             key={list.id}
-            onDoubleClick={() => abrirTarefa(selectedSpace, list)}
+            onClick={() => abrirTarefa(selectedSpace, list)}
           >
             {editMode === list.id ? (
               <>
