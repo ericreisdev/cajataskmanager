@@ -1,94 +1,96 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #ffffff;
+  background-color: #f7f9fc;
   width: 300px;
-  height: auto; 
   padding: 20px;
   position: fixed;
   top: 50%; 
   left: 50%; 
   transform: translate(-50%, -50%);
-  border: 1px solid #ccc;  // Adiciona a borda
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  // Adiciona sombreamento
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 600px) {  
     width: 90%;  
   }
 `;
 
-
 export const Title = styled.div`
   font-size: 24px;
-  font-weight: bold;
-  color: #4f3d9e;
+  font-weight: 600;
+  color: #3a57e8;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 export const Form = styled.form`
   p {
     margin-bottom: 10px;
-    font-weight: bold;
-    color: #4f3d9e;
+    font-weight: 600;
+    color: #3a57e8;
   }
 `;
 
 export const Input = styled.input`
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #dcdcdc;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #3a57e8;
+  }
 `;
 
 export const Button = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 10px 20px;
-  color: #ffffff;
-  background-color: #06d6a0;
+  color: white;
+  background-color: #3a57e8;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bolder;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
   &:hover {
-    background-color: #703ce5;
+    background-color: #2c45c7;
+    transform: translateY(-2px);
   }
 `;
 
 export const CloseButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px; // Ajuste o padding aqui para que o botão fique proporcional
-  color: #ffffff;
-  background-color: #ff4d4d;
+  padding: 10px 20px;
+  color: white;
+  background-color: #cc0000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
   &:hover {
-    background-color: #cc0000;
+    background-color: #b20000;
+    transform: translateY(-2px);
   }
 `;
 
 export const SaveCentral = styled.div`
   display: flex;
-  justify-content: flex-start;  // alinhado ao início
+  justify-content: flex-end;
   align-items: center;
-`
+  flex: 1;
+`;
 
 export const CloseCentral = styled.div`
   display: flex;
-  justify-content: flex-start;  // alinhado ao início
+  justify-content: flex-start;
   align-items: center;
-`
+  flex: 1;
+`;
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
 `;

@@ -175,7 +175,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
       )}
       <Title>{selectedSpace.title}</Title>
       <Button style={{marginBottom: ""}} onClick={toggleTaskForm}>Nova Tarefa</Button>{" "}
-      <ButtonNewList></ButtonNewList>
+      
       
       {showTaskForm && (
         <Form onSubmit={handleTaskSubmit}>
@@ -260,7 +260,7 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
               <>
                 <TarefaEmLinha>
                   <div>
-                    <p style={{fontWeight: 'bolder', backgroundColor: '#06d6a0', color: 'white', padding: '10px', borderRadius: '7px'}} title="Clique para editar"> {list.name}</p>
+                    <p style={{fontWeight: 'bolder', backgroundColor: '#3a57e8', color: 'white', padding: '10px', borderRadius: '7px'}} title="Clique para editar"> {list.name}</p>
                     <div>
                       
                     </div>

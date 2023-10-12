@@ -15,7 +15,7 @@ import {
   Input,
 } from "./style";
 import FloatingWindow from "./FloatingWindow";
-import OptionsWindow from "./OptionsWindow";
+
 import { FaTrash, FaEdit, FaSave } from "react-icons/fa";
 import ConfirmModal from "./ConfirmModal";
 import { writeToDatabase, readFromDatabase, uploadToStorage, downloadFromStorage } from "../../firebaseServices";
@@ -87,41 +87,11 @@ const Sidebar = ({
   return (
     <Container>
       <Nav>
-        <Section>
-          <SectionHeader onClick={() => toggleExpansion(0)}>
-            Início
-            <ArrowIcon isExpanded={expandedSections.includes(0)}>
-              &#9660;
-            </ArrowIcon>
-          </SectionHeader>
-          {expandedSections.includes(0) && (
-            <SectionContent>
-              {sidebarItems.slice(0, 2).map((item, index) => (
-                <NavItem key={index}>{item}</NavItem>
-              ))}
-            </SectionContent>
-          )}
-        </Section>
+        
 
-        <hr />
-
-        <Section>
-          <SectionHeader onClick={() => toggleExpansion(1)}>
-            Favoritos
-            <ArrowIcon isExpanded={expandedSections.includes(1)}>
-              &#9660;
-            </ArrowIcon>
-          </SectionHeader>
-          {expandedSections.includes(1) && (
-            <SectionContent>{/* Conteúdo da seção Favoritos */}</SectionContent>
-          )}
-        </Section>
-
-        <hr />
-
-        <Section>
+           <Section>
           <SectionHeader onClick={() => toggleExpansion(2)}>
-            Produção
+            <h1>Produção</h1>
             <ArrowIcon isExpanded={expandedSections.includes(2)}>
               &#9660;
             </ArrowIcon>
@@ -169,21 +139,7 @@ const Sidebar = ({
           )}
         </Section>
 
-        <hr />
-
-        <Section>
-          <SectionHeader onClick={() => toggleExpansion(3)}>
-            Tarefas Diárias
-            <ArrowIcon isExpanded={expandedSections.includes(3)}>
-              &#9660;
-            </ArrowIcon>
-          </SectionHeader>
-          {expandedSections.includes(3) && (
-            <SectionContent>{/* Conteúdo da seção Painéis */}</SectionContent>
-          )}
-        </Section>
-
-        <hr />
+    
       </Nav>
 
       {showFloatingWindow && (
