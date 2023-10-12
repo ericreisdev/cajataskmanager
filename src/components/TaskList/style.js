@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #ffffff;
+  background-color: #f7f9fc;
   width: 100%;
   padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
 
-  ul{
+
+  ul {
     list-style-type: none;
   }
 `;
@@ -15,31 +18,38 @@ export const ButtonNewList = styled.span`
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  background-color: white;
-
-  color: #8b71e5;
-  font-size: 72px;
-  margin-right: -15px;
-  border: none;
+  background-color: #eceffd;
+  color: #3a57e8;
+  border: 2px solid #3a57e8;
   border-radius: 5px;
-  font-size: 22px;
+  font-size: 72px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  font-weight: bolder;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #3a57e8;
+    color: #eceffd;
+  }
 `;
+
+
 
 export const Title = styled.h1`
   font-size: 28px;
-  font-weight: bold;
-  color: #4f3d9e;
+  color: #3a57e8;
   margin-bottom: 20px;
   text-align: center;
+  font-weight: 600;
 `;
 
 export const Form = styled.form`
-  display: flex;
+ display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
 
   & > * {
     flex: 1;
@@ -57,12 +67,17 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
-  padding: 10px;
-  border: 1px solid #ccc;
+ padding: 10px;
+  border: 1px solid #dcdcdc;
   border-radius: 5px;
   font-size: 16px;
-  color: #4f3d9e;
+  color: #3a57e8;
   width: 100%;
+  transition: border-color 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #3a57e8;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
@@ -70,11 +85,17 @@ export const Input = styled.input`
 `;
 
 export const Select = styled.select`
-  padding: 10px;
-  border: 1px solid #ccc;
+ padding: 10px;
+  border: 1px solid #dcdcdc;
   border-radius: 5px;
   font-size: 16px;
-  color: #4f3d9e;
+  color: #3a57e8;
+  width: 100%;
+  transition: border-color 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #3a57e8;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
@@ -83,14 +104,14 @@ export const Select = styled.select`
 
 export const Button = styled.button`
   padding: 10px 20px;
-  background-color: #06d6a0;
+  background-color: #3a57e8;
   width: 20;
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  font-weight: bolder;
+  
   transition: background-color 0.3s ease-in-out;
 
   .plus-button {
@@ -98,21 +119,21 @@ export const Button = styled.button`
   }
 
   &:hover {
-    background-color: #703ce5;
+    background-color: #eceffd;
+    color: #4768e4;
   }
 
-  .open-button{
+  .open-button {
     margin-left: auto; // Isso vai empurrar o botão para a direita
   }
 `;
 
 export const EditButton = styled(Button)`
-  
   transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const DeleteButton = styled(Button)`
-    transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
+  transition: visibility 0.3s ease-in-out; // ou 'transition: opacity 0.3s ease-in-out;'
 `;
 
 export const TarefaEmLinha = styled.div`
@@ -124,11 +145,9 @@ export const TarefaEmLinha = styled.div`
   background-color: #f2f2f2;
   border-radius: 5px;
   font-size: 16px;
-  color: #4f3d9e;
+  color: #3a57e8;
   cursor: pointer;
   margin-left: 20px;
-  
-
 
   &:hover ${EditButton}, &:hover ${DeleteButton} {
     visibility: visible; // ou 'opacity: 1;' para mostrar
@@ -183,7 +202,7 @@ export const InputWrapper = styled.div`
   label {
     margin-top: 25px;
     margin-bottom: 5px;
-    font-weight: bold;
+    
   }
   input {
     margin-top: 0;

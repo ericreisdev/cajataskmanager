@@ -5,13 +5,13 @@ import {
   SidebarContainer,
   TaskListContainer,
 } from "./GlobalStyle";
-import Header from "./components/Header";
 import Sidebar from "./components/Sidebar/index";
 import TaskList from "./components/TaskList";
+import Header from "./components/Header";
 
 const App = () => {
-  const navItems = ["Home", "Sobre", "Contatos"];
-  const sidebarItems = ["Notificações", "Metas", "Espaços"];
+  const navItems = [""];
+  const sidebarItems = [""];
 
   const [spaces, setSpaces] = useState(() => {
     const savedSpaces = localStorage.getItem("spaces");
@@ -106,7 +106,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Header  navItems={navItems} />
+      <Header/>
       <MainContainer>
         <SidebarContainer>
           <Sidebar

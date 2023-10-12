@@ -14,29 +14,39 @@ export const ModalWrapper = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
+  background-color: #f7f9fc;
+  padding: 30px;
+  border-radius: 10px;
   width: 400px;
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
 export const ModalHeader = styled.h2`
-  margin-bottom: 15px;
-  color: #4f3d9e;
+  margin-bottom: 20px;
+  color: #3a57e8;
+  font-size: 24px;
+  font-weight: 600;
 `;
 
 export const ModalText = styled.p`
-  margin-bottom: 15px;
-  color: #4f3d9e;
+  margin-bottom: 20px;
+  color: #3a57e8;
+  font-size: 18px;
+  line-height: 1.5;
 `;
 
 export const ModalInput = styled.input`
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #3a57e8;
+  }
 `;
 
 export const ModalButton = styled.button`
@@ -44,12 +54,13 @@ export const ModalButton = styled.button`
   margin: 5px;
   border: none;
   cursor: pointer;
-  border-radius: 4px;
-  background-color: ${props => props.cancel ? '#4f3d9e' : '#8b71e5'};
-  color: #fff;
+  border-radius: 5px;
+  background-color: ${props => props.cancel ? '#3a57e8' : '#cc0000'};
+  color: white;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
   &:hover {
-    background-color: ${props => props.cancel ? '#8b71e5' : '#4f3d9e'};
+    background-color: ${props => props.cancel ? '#2c45c7' : '#cc0000'};
+    transform: translateY(-2px);
   }
 `;
-

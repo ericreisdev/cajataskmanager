@@ -1,17 +1,17 @@
 import React from 'react';
-import { Container, Logo, Nav, NavItem } from './style';
+import { Container, LogoContainer, LogoImage, Title } from './style';
+import Logo from "../../assets/img/caja.png"
 
-const Header = ({ logoUrl, navItems }) => {
-  return (
-    <Container>
-      <Logo  alt="Logo" />
-      <Nav>
-        {navItems.map((item, index) => (
-          <NavItem key={index}>{item}</NavItem>     
-        ))}
-      </Nav>
-    </Container>
-  );
+const Header = () => {
+    return (
+        <Container>
+            <LogoContainer>
+                <LogoImage src={Logo} alt="Logo" /> {/* Aqui você pode inserir o caminho da sua imagem. */}
+                <Title>Gerenciador de Tarefas</Title>
+            </LogoContainer>
+            
+        </Container>
+    );
 };
 
-export default Header; 
+export default Header;

@@ -8,12 +8,13 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: 'Arial', sans-serif; // Defina a fonte padrão que preferir
+    font-family: 'Calibri', sans-serif; // Defina a fonte padrão que preferir
     background-color: #f4f4f4; // Um fundo suave para a página inteira
   }
 `;
 
 export const MainContainer = styled.div`
+  min-height: 100vh; // Garante que o contêiner principal tenha pelo menos a altura da tela
   display: flex;
 
   @media (max-width: 768px) {
@@ -24,7 +25,7 @@ export const MainContainer = styled.div`
 export const SidebarContainer = styled.div`
   width: 220px;
   background-color: #ffffff;
-  padding: 20px;
+  padding: 0;
   border-right: 1px solid #ddd; 
 
   @media (max-width: 768px) {
@@ -36,7 +37,7 @@ export const SidebarContainer = styled.div`
 
 export const TaskListContainer = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 0;
   background-color: #ffffff;
 
   @media (max-width: 768px) {

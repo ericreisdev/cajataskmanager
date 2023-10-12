@@ -1,18 +1,21 @@
 import styled, { css } from "styled-components";
 
 const ButtonStyle = css`
-  padding: 4px;
+  padding: 8px 12px;
   color: #ffffff;
-  background-color: #8b71e5;
-  font-weight: bold;
+  background-color: #3a57e8;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
   text-align: center;
   margin-bottom: 10px;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: #703ce5;
+    background-color: #eceffd;
+    color: #4768e4;
+    transform: translateY(-2px); 
   }
 `;
 
@@ -22,6 +25,7 @@ export const Container = styled.div`
   width: 220px;
   height: 100%;
   padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     width: 100%;
@@ -31,12 +35,16 @@ export const Container = styled.div`
 
 export const Logo = styled.div`
   font-size: 24px;
-  font-weight: bold;
+  
   color: #4f3d9e;
   margin-bottom: 20px;
 `;
 
-export const Nav = styled.nav``;
+export const Nav = styled.nav`
+margin-top: 20px;
+border-radius: 8px;
+ overflow: hidden;
+`;
 
 export const Section = styled.div`
   margin-bottom: 20px;
@@ -46,12 +54,15 @@ export const SectionHeader = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-weight: bold;
-  color: #4f3d9e;
-  transition: color 0.3s ease-in-out;
+  padding: 10px 15px;
+  background: linear-gradient(145deg, #e1e5ea, #ffffff);
+  
+  color: #3a57e8;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    color: #8b71e5;
+    color: #95999e;
+    background: linear-gradient(145deg, #dce0e5, #f1f3f5); 
   }
 `;
 
@@ -62,7 +73,7 @@ export const ArrowIcon = styled.span`
 `;
 
 export const DeleteButton = styled.button`
-  background-color: #4f3d9e;
+  background-color: #3a57e8;
   border: none;
   outline: none;
   cursor: pointer;
@@ -76,8 +87,27 @@ export const DeleteButton = styled.button`
   }
 `;
 
+/*const ButtonStyle = css`
+padding: 4px;
+color: #cceafe;
+background-color: #3a57e8;
+
+cursor: pointer;
+border-radius: 5px;
+text-align: center;
+margin-bottom: 10px;
+transition: background-color 0.3s ease-in-out;
+
+&:hover {
+  background-color: #eceffd;
+  color: #4768e4;
+}
+`;
+
+*/
+
 export const EditFolder = styled.button`
-  background-color: #4f3d9e;
+  background-color: #3a57e8;
   border: none;
   outline: none;
   cursor: pointer;
@@ -127,14 +157,15 @@ export const SectionContent = styled.div`
 `;
 
 export const NavItem = styled.div`
-  padding: 5px 0;
+  padding: 10px 15px; // Aumentar o padding para melhor ergonomia
   color: #4f3d9e;
-
-  cursor: pointer;
-  transition: color 0.3s ease-in-out;
+  border-radius: 8px; // Arredondar as bordas do item
+  transition: all 0.3s ease-in-out;
+  margin: 5px 0; // Adicionar uma pequena margem vertical entre os itens
 
   &:hover {
     color: #8b71e5;
+    background-color: #f1f3f5; // Adicionar uma cor de fundo sutil no hover
   }
 `;
 

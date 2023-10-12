@@ -38,13 +38,13 @@ export const Conteudo = styled.div`
 
 export const NomePasta = styled.h2`
   font-size: 24px;
-  color: #4f3d9e;
+  color: #3a57e8;
   margin-bottom: 10px;
 `;
 
 export const NomeTarefa = styled.h3`
   font-size: 20px;
-  color: #8b71e5;
+  color: #3a57e8;
   margin-bottom: 10px;
 `;
 
@@ -57,17 +57,20 @@ export const CaixaTexto = styled.textarea`
   border-radius: 5px;
 `;
 
+
+
 export const Botao = styled.button`
   padding: 5px 10px;
-  color: #ffffff;
-  background-color: #06d6a0;
+  color: #cceafe;
+  background-color: #3a57e8;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bolder;
 
   &:hover {
-    background-color: #703ce5;
+    background-color: #eceffd;
+    color: #4768e4;
   }
 `;
 
@@ -93,17 +96,36 @@ export const InputFileLabel = styled.label`
   display: inline-flex;
   align-items: center;
   padding: 5px 10px;
-  color: #ffffff;
-  background-color: #8b71e5;
+  color: #cceafe;
+  background-color: #3a57e8;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-right: 10px;
 
   &:hover {
-    background-color: #703ce5;
+    background-color: #eceffd;
+  color: #4768e4;
   }
 `;
 
 
 
+/*const ButtonStyle = css`
+padding: 4px;
+color: #cceafe;
+background-color: #3a57e8;
+font-weight: bold;
+cursor: pointer;
+border-radius: 5px;
+text-align: center;
+margin-bottom: 10px;
+transition: background-color 0.3s ease-in-out;
+
+&:hover {
+  background-color: #eceffd;
+  color: #4768e4;
+}
+`;
+
+*/
