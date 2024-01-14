@@ -8,6 +8,7 @@ import {
 import Sidebar from "./components/Sidebar/index";
 import TaskList from "./components/TaskList";
 import Header from "./components/Header";
+import { updateWorkspace } from "./api/workspaceService";
 
 const App = () => {
   const navItems = [""];
@@ -27,15 +28,16 @@ const App = () => {
     setEditingSpaceValue(spaceTitle);
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = async () => {
+    const updatedSpace = await updateWorkspace(editingSpaceId, {
+      title: editingSpaceValue,
+    });
     setSpaces((prevSpaces) =>
       prevSpaces.map((space) =>
-        space.id === editingSpaceId
-          ? { ...space, title: editingSpaceValue }
-          : space
+        space.id === editingSpaceId ? updatedSpace : space
       )
     );
-    setEditingSpaceId(null)
+    setEditingSpaceId(null);
   };
 
   // useEffect para carregar os 'spaces' do localStorage quando o componente é montado
@@ -56,15 +58,10 @@ const App = () => {
       const newSpace = {
         id: Date.now(),
         title: newSpaceInput,
-        lists: [],
+        lists: [], // Garanta que a propriedade lists está presente
       };
 
-      setSpaces((prevSpaces) => {
-        const updatedSpaces = [...prevSpaces, newSpace];
-        localStorage.setItem("spaces", JSON.stringify(updatedSpaces));
-        return updatedSpaces;
-      });
-
+      setSpaces((prevSpaces) => [...prevSpaces, newSpace]);
       setSelectedSpaceId(newSpace.id);
     }
   };
@@ -83,7 +80,7 @@ const App = () => {
             : space
         )
       );
-      localStorage.setItem("spaces", JSON.stringify([...spaces]));
+      localStorage.setItem("spaces", JSON.stringify(spaces));
     }
   };
 
@@ -106,7 +103,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Header/>
+      <Header />
       <MainContainer>
         <SidebarContainer>
           <Sidebar

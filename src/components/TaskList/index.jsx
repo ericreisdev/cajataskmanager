@@ -23,17 +23,32 @@ import {
   FaAlignRight,
   FaAlignCenter,
 } from "react-icons/fa";
+
+import axios from "axios";
 import {
-  writeToDatabase,
-  readFromDatabase,
-  uploadToStorage,
-  downloadFromStorage,
-} from "../../firebaseServices";
+  getTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../../api/worktaskSevice";
 
 const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
+  const [tasks, setTasks] = useState([]);
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
 
   const [showTaskForm, setShowTaskForm] = useState(false);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      if (selectedSpaceId) {
+        const loadedTasks = await getTasks(selectedSpaceId);
+        console.log("Tarefas carregadas:", loadedTasks); // Adicione este log para depuração
+        setTasks(loadedTasks || []); // Atualiza o estado com as tarefas carregadas
+      }
+    };
+
+    fetchTasks();
+  }, [selectedSpaceId]);
 
   const toggleTaskForm = () => {
     setShowTaskForm(!showTaskForm);
@@ -89,21 +104,35 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
     }));
   };
 
-  const handleTaskSubmit = (e) => {
+  const handleTaskSubmit = async (e) => {
     e.preventDefault();
-    console.log("Nova tarefa: ", newTask); // Adicionar esta linha
 
     if (newTask.name.trim() === "" || newTask.responsibility.trim() === "") {
       alert("Os campos nome e responsável são obrigatórios");
       return;
     }
-    onTaskSubmit(selectedSpaceId, { ...newTask, details: "" });
-    setNewTask({
-      name: "",
-      responsibility: "",
-      dueDate: "",
-      observation: "",
-    });
+
+    try {
+      const newWorklist = await createTask(selectedSpaceId, {
+        name: newTask.name,
+        responsibility: newTask.responsibility,
+        due_date: newTask.dueDate,
+        observation: newTask.observation,
+      });
+      setSpaces((prevSpaces) =>
+        prevSpaces.map((space) =>
+          space.id === selectedSpaceId
+            ? {
+                ...space,
+                lists: [...space.lists, { ...newTask, id: Date.now() }],
+              }
+            : space
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao criar tarefa:", error);
+      alert("Erro ao criar tarefa");
+    }
   };
 
   const handleTaskDetailsSave = (taskId, details) => {
@@ -124,21 +153,18 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
     setUpdatedTask({ ...taskToEdit });
   };
 
-  const handleDeleteTask = (taskId) => {
-    
+  const handleDeleteTask = async (taskId) => {
     const confirmDelete = window.confirm(
       "Você tem certeza que deseja excluir esta tarefa?"
     );
     if (confirmDelete) {
-      const updatedLists = selectedSpace.lists.filter(
-        (list) => list.id !== taskId
-      );
-      const updatedSpace = { ...selectedSpace, lists: updatedLists };
-      const updatedSpaces = spaces.map((space) =>
-        space.id === selectedSpaceId ? updatedSpace : space
-      );
-      setSpaces(updatedSpaces);
-      setEditMode(null);
+      try {
+        await deleteTask(selectedSpaceId, taskId);
+        // Código para atualizar o estado após a exclusão...
+      } catch (error) {
+        console.error("Erro ao excluir tarefa:", error);
+        alert("Erro ao excluir tarefa");
+      }
     }
   };
 
@@ -146,17 +172,18 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
     setUpdatedTask((prevTask) => ({ ...prevTask, [field]: value }));
   };
 
-  const handleTaskSave = () => {
-    const updatedLists = selectedSpace.lists.map((list) =>
-      list.id === editMode ? { ...updatedTask } : list
-    );
-    const updatedSpace = { ...selectedSpace, lists: updatedLists };
-    const updatedSpaces = spaces.map((space) =>
-      space.id === selectedSpaceId ? updatedSpace : space
-    );
-    setSpaces(updatedSpaces);
-    setEditMode(null);
-    setUpdatedTask({});
+  const handleTaskSave = async () => {
+    try {
+      const updatedWorklist = await updateTask(
+        selectedSpaceId,
+        editMode,
+        updatedTask
+      );
+      // Código para atualizar o estado após a atualização...
+    } catch (error) {
+      console.error("Erro ao atualizar tarefa:", error);
+      alert("Erro ao atualizar tarefa");
+    }
   };
 
   if (!selectedSpace) {
@@ -174,9 +201,9 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         />
       )}
       <Title>{selectedSpace.title}</Title>
-      <Button style={{marginBottom: ""}} onClick={toggleTaskForm}>Nova Tarefa</Button>{" "}
-      
-      
+      <Button style={{ marginBottom: "" }} onClick={toggleTaskForm}>
+        Nova Tarefa
+      </Button>{" "}
       {showTaskForm && (
         <Form onSubmit={handleTaskSubmit}>
           <InputWrapper>
@@ -224,78 +251,91 @@ const TaskList = ({ spaces, selectedSpaceId, onTaskSubmit, setSpaces }) => {
         </Form>
       )}
       <ul>
-        {selectedSpace.lists.map((list) => (
-          <li
-            key={list.id}
-            onDoubleClick={() => abrirTarefa(selectedSpace, list)}
-          >
-            {editMode === list.id ? (
-              <>
-                <Input
-                  type="text"
-                  value={updatedTask.name}
-                  onChange={(e) => handleTaskUpdate("name", e.target.value)}
-                />
-                <Input
-                  type="text"
-                  value={updatedTask.responsibility}
-                  onChange={(e) =>
-                    handleTaskUpdate("responsibility", e.target.value)
-                  }
-                />
-                <Input
-                  type="date"
-                  value={updatedTask.dueDate}
-                  onChange={(e) => handleTaskUpdate("dueDate", e.target.value)}
-                />
-                <Input
-                  value={updatedTask.observation}
-                  onChange={(e) =>
-                    handleTaskUpdate("observation", e.target.value)
-                  }
-                ></Input>
-                <SaveButton onClick={handleTaskSave}>SALVAR</SaveButton>
-              </>
-            ) : (
-              <>
-                <TarefaEmLinha>
-                  <div>
-                    <p style={{fontWeight: 'bolder', backgroundColor: '#3a57e8', color: 'white', padding: '10px', borderRadius: '7px'}} title="Clique para editar"> {list.name}</p>
+      {tasks.length > 0 ? (
+        tasks.map((task) => (
+            <li
+              key={task.id}
+              onDoubleClick={() => abrirTarefa(selectedSpace, task)}
+            >
+              {editMode === task.id ? (
+                <>
+                  <Input
+                    type="text"
+                    value={updatedTask.name}
+                    onChange={(e) => handleTaskUpdate("name", e.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    value={updatedTask.responsibility}
+                    onChange={(e) =>
+                      handleTaskUpdate("responsibility", e.target.value)
+                    }
+                  />
+                  <Input
+                    type="date"
+                    value={updatedTask.dueDate}
+                    onChange={(e) =>
+                      handleTaskUpdate("dueDate", e.target.value)
+                    }
+                  />
+                  <Input
+                    value={updatedTask.observation}
+                    onChange={(e) =>
+                      handleTaskUpdate("observation", e.target.value)
+                    }
+                  ></Input>
+                  <SaveButton onClick={handleTaskSave}>SALVAR</SaveButton>
+                </>
+              ) : (
+                <>
+                  <TarefaEmLinha>
                     <div>
-                      
-                    </div>
-                    <p title="Clique para editar">
-                      Responsável: {list.responsibility}
-                    </p>
-                    <p title="Clique para editar">
-                      Data: {formatDate(list.dueDate)}
-                    </p>
-                    <p style={{display: 'flex', flex: 'flex-wrap'}} title="Clique para editar">
-                      Observações: {list.observation}
-                    </p>
-                  </div>
-                  <div>
-                  <Button
-                        
-                        onClick={() => abrirTarefa(selectedSpace, list)}
+                      <p
+                        style={{
+                          fontWeight: "bolder",
+                          backgroundColor: "#3a57e8",
+                          color: "white",
+                          padding: "10px",
+                          borderRadius: "7px",
+                        }}
+                        title="Clique para editar"
                       >
+                        {" "}
+                        {task.name}
+                      </p>
+                      <div></div>
+                      <p title="Clique para editar">
+                        Responsável: {task.responsibility}
+                      </p>
+                      <p title="Clique para editar">
+                        Data: {formatDate(task.dueDate)}
+                      </p>
+                      <p
+                        style={{ display: "flex", flex: "flex-wrap" }}
+                        title="Clique para editar"
+                      >
+                        Observações: {task.observation}
+                      </p>
+                    </div>
+                    <div>
+                      <Button onClick={() => abrirTarefa(selectedSpace, task)}>
                         Abrir
                       </Button>
-                    <EditButton onClick={() => handleEditTask(list.id)}>
-                      <FaEdit />
-                    </EditButton>
-                    <DeleteButton onClick={() => handleDeleteTask(list.id)}>
-                      <FaTrash />
-                    </DeleteButton>
-                    
-                      
-                    
-                  </div>
-                </TarefaEmLinha>
-              </>
-            )}
-          </li>
-        ))}
+                      <EditButton onClick={() => handleEditTask(task.id)}>
+                        <FaEdit />
+                      </EditButton>
+                      <DeleteButton onClick={() => handleDeleteTask(task.id)}>
+                        <FaTrash />
+                      </DeleteButton>
+                    </div>
+                  </TarefaEmLinha>
+                </>
+              )}
+            </li>
+          ))
+        ) : (
+          <li>Nenhuma tarefa disponível</li>
+        )}
       </ul>
     </Container>
   );
