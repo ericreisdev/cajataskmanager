@@ -7,9 +7,10 @@ const FloatingWindow = ({ onClose, onSubmit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(input);
+    onSubmit({ title: input }); // Altere para enviar um objeto
     setInput("");
   };
+  
 
   return (
     <Container>
