@@ -45,4 +45,4 @@ export const createWorkspace = async (workspaceData) => {
       // Lide com o erro conforme necessário
     }
   };
-  
+  //C:\Users\Eric\OneDrive\Área de Trabalho\Projetos\Digital Mais\digital-mais\src\api\workspaceService.js

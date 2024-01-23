@@ -16,6 +16,8 @@ import { getWorkspaces, createWorkspace, updateWorkspace, deleteWorkspace } from
 import { FaTrash, FaEdit, FaSave } from "react-icons/fa";
 import ConfirmModal from "./ConfirmModal";
 
+
+
 // Definindo o componente Sidebar
 const Sidebar = ({
   sidebarItems, // itens do menu do sidebar
@@ -36,16 +38,21 @@ const Sidebar = ({
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [spaceToDelete, setSpaceToDelete] = useState(null);
 
-  // Função para carregar os workspaces da API
-  useEffect(() => {
-    const fetchWorkspaces = async () => {
-      const fetchedSpaces = await getWorkspaces();
-      const spacesWithLists = fetchedSpaces.map(space => ({ ...space, lists: space.lists || [] }));
-      setSpaces(spacesWithLists);
-    };
-  
-    fetchWorkspaces();
-  }, []);
+//   // Função para carregar os workspaces da API
+//   useEffect(() => {
+//   const fetchWorkspaces = async () => {
+//     const fetchedSpaces = await getWorkspaces();
+//     const spacesWithListsPromises = fetchedSpaces.map(async (space) => {
+//       const worklists = await getTasks(space.id); // getTasks é usado para buscar worklists
+//       return { ...space, lists: worklists };
+//     });
+//     const spacesWithLists = await Promise.all(spacesWithListsPromises);
+//     setSpaces(spacesWithLists);
+//   };
+
+//   fetchWorkspaces();
+// }, []);
+
   
 
   // const handleSaveEdit = async () => {
@@ -169,3 +176,4 @@ const Sidebar = ({
 };
 
 export default Sidebar;
+//C:\Users\Eric\OneDrive\Área de Trabalho\Projetos\Digital Mais\digital-mais\src\components\Sidebar\index.jsx
