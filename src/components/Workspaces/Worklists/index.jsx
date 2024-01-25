@@ -7,6 +7,9 @@ import {
   createWorklist,
 } from "../../../api/worklistSevice"; // Ajuste o caminho se necessário
 
+import { WorklistsContainer, Title, FormSection, Input, Button, WorklistItem, WorklistList, Div } from "./style";
+
+
 const Worklists = () => {
   const { workspaceId } = useParams();
   const [worklists, setWorklists] = useState([]);
@@ -83,89 +86,86 @@ const Worklists = () => {
   if (isLoading) return <p>Carregando...</p>;
 
   return (
-    <div>
-      <h1>Worklists do Workspace {workspaceId}</h1>
-      {/* Formulário para adicionar nova worklist */}
-      <div>
-        <input
+    <WorklistsContainer>
+      <Title>Worklists do Workspace {workspaceId}</Title>
+      <FormSection>
+        <Input
           type="text"
           name="name"
           value={newWorklist.name}
           onChange={handleNewWorklistChange}
           placeholder="Nome"
         />
-        <input
+        <Input
           type="text"
           name="responsibility"
           value={newWorklist.responsibility}
           onChange={handleNewWorklistChange}
           placeholder="Responsabilidade"
         />
-        <input
+        <Input
           type="date"
           name="due_date"
           value={newWorklist.due_date}
           onChange={handleNewWorklistChange}
           placeholder="Data de Vencimento"
         />
-        <input
+        <Input
           type="text"
           name="observation"
           value={newWorklist.observation}
           onChange={handleNewWorklistChange}
           placeholder="Observação"
         />
-        <button onClick={handleAddNewWorklist}>Adicionar Worklist</button>
-      </div>
-      <ul>
+        <Button onClick={handleAddNewWorklist}>Adicionar Worklist</Button>
+      </FormSection>
+      <WorklistList>
         {worklists.map(worklist => (
-          <li key={worklist.id} style={listItemStyle}>
+          <WorklistItem key={worklist.id}>
             {editingWorklist?.id === worklist.id ? (
               <div>
-                <input
+                <Input
                   type="text"
                   name="name"
                   value={editingWorklist.name}
                   onChange={handleEditChange}
                 />
-                <input
+                <Input
                   type="text"
                   name="responsibility"
                   value={editingWorklist.responsibility}
                   onChange={handleEditChange}
                 />
-                <input
+                <Input
                   type="date"
                   name="due_date"
                   value={editingWorklist.due_date}
                   onChange={handleEditChange}
                 />
-                <input
+                <Input
                   type="text"
                   name="observation"
                   value={editingWorklist.observation}
                   onChange={handleEditChange}
                 />
-                <button onClick={handleSaveEdit}>Salvar</button>
-                <button onClick={() => setEditingWorklist(null)}>Cancelar</button>
+                <Button onClick={handleSaveEdit}>Salvar</Button>
+                <Button onClick={() => setEditingWorklist(null)}>Cancelar</Button>
               </div>
             ) : (
-              <>
+              <Div>
                 <strong>Nome:</strong> {worklist.name}<br />
                 <strong>Responsabilidade:</strong> {worklist.responsibility}<br />
                 <strong>Data de Vencimento:</strong> {worklist.due_date}<br />
-                <strong>Observação:</strong> {worklist.observation}
-                <br />
-                <button onClick={() => setEditingWorklist(worklist)}>Editar</button>
-                <button onClick={() => handleDelete(worklist.id)}>Excluir</button>
-              </>
+                <strong>Observação:</strong> {worklist.observation}<br />
+                <Button onClick={() => setEditingWorklist(worklist)}>Editar</Button>
+                <Button onClick={() => handleDelete(worklist.id)}>Excluir</Button>
+                <Button onClick={() => navigate(`/workspaces/${workspaceId}/worklists/${worklist.id}/worktasks/${worklist.id}`)}>Abrir Detalhes da Worktask</Button>
+              </Div>
             )}
-             <button onClick={() => navigate(`/workspaces/${workspaceId}/worklists/${worklist.id}/worktasks/${worklist.id}`)}>Abrir Detalhes da Worktask</button>
-
-          </li>
+          </WorklistItem>
         ))}
-      </ul>
-    </div>
+      </WorklistList>
+    </WorklistsContainer>
   );
             }
 export default Worklists;

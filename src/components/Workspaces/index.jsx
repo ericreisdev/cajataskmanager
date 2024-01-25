@@ -14,6 +14,8 @@ import {
 
 //Certifique-se de que este caminho está correto
 
+import { WorkspaceContainer, WorkspaceList, WorkspaceItem, WorkspaceTitle, Button, StyledLink, Input } from "./style";
+
 const Workspaces = () => {
   const [workspaces, setWorkspaces] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,20 +76,18 @@ const Workspaces = () => {
 
   if (isLoading) return <p>Carregando...</p>;
 
- if (isLoading) return <LoadingText>Carregando...</LoadingText>;
-
   return (
     <WorkspaceContainer>
-      <WorkspaceHeader>Workspaces</WorkspaceHeader>
+      <WorkspaceTitle>Workspaces</WorkspaceTitle>
       <AddWorkspaceForm onWorkspaceAdded={fetchWorkspaces} />
       <WorkspaceList>
         {workspaces.map(workspace => (
           <WorkspaceItem key={workspace.id}>
             {editingWorkspace && editingWorkspace.id === workspace.id ? (
               <div>
-                <EditInput 
-                  type="text" 
-                  value={editingWorkspace.title} 
+                <Input
+                  type="text"
+                  value={editingWorkspace.title}
                   onChange={handleEditChange}
                 />
                 <Button onClick={() => handleSaveEdit({ title: editingWorkspace.title })}>Salvar</Button>
@@ -95,7 +95,7 @@ const Workspaces = () => {
               </div>
             ) : (
               <>
-                <WorkspaceLink to={`/workspaces/${workspace.id}/worklists`}>{workspace.title}</WorkspaceLink>
+                <StyledLink to={`/workspaces/${workspace.id}/worklists`}>{workspace.title}</StyledLink>
                 <Button onClick={() => handleEdit(workspace)}>Editar</Button>
                 <Button onClick={() => handleDelete(workspace.id)}>Excluir</Button>
               </>

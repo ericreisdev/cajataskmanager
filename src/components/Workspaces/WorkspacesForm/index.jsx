@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import apiClient from '../../../api/apiClient'; // Importe sua instância personalizada do Axios
+import { Form, StyledInput, SubmitButton } from './style';
 
 const AddWorkspaceForm = ({ onWorkspaceAdded }) => {
   const [title, setTitle] = useState('');
@@ -16,15 +17,15 @@ const AddWorkspaceForm = ({ onWorkspaceAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        value={title} 
+    <Form onSubmit={handleSubmit}>
+      <StyledInput
+        type="text"
+        value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Título do Workspace"
       />
-      <button type="submit">Adicionar Workspace</button>
-    </form>
+      <SubmitButton type="submit">Adicionar Workspace</SubmitButton>
+    </Form>
   );
 };
 

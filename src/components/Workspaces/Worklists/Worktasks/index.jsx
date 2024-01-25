@@ -9,6 +9,20 @@ import {
   deleteWorktask,
 } from "../../../../api/worktaskService";
 
+import {
+  WorktaskContainer,
+  Form,
+  Textarea,
+  WorktaskList,
+  WorktaskItem,
+  WorktaskDescription,
+  Button,
+  EditButton,
+  DeleteButton,
+  CancelButton
+} from './style'
+import { Div } from "../style";
+
 const Worktask = () => {
   const { workspaceId, worklistId } = useParams();
   const [worktasks, setWorktasks] = useState([]);
@@ -86,53 +100,55 @@ const Worktask = () => {
   };
 
   return (
-    <div>
+    <WorktaskContainer>
       {/* Formulário para adicionar uma nova Worktask */}
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <h2>Criar Worktask</h2>
         <label>
-          Descrição:
-          <textarea
+          <Div>Descrição:</Div> 
+          <Textarea
             name="description"
             value={worktaskData.description}
             onChange={handleInputChange}
             required
           />
         </label>
-        <button type="submit">Adicionar Worktask</button>
-      </form>
+        <Button type="submit">Adicionar Worktask</Button>
+      </Form>
 
       {/* Listagem das Worktasks */}
-      {worktasks.map((worktask) => (
-        <div key={worktask.id}>
-          {worktaskData.id === worktask.id ? (
-            // Formulário para edição de Worktask
-            <form onSubmit={(e) => handleUpdate(e, worktask.id)}>
-              <label>
-                Descrição:
-                <textarea
-                  name="description"
-                  value={worktaskData.description}
-                  onChange={handleInputChange}
-                  required
-                />
-              </label>
-              <button type="submit">Salvar</button>
-              <button onClick={() => setWorktaskData({ description: "" })}>
-                Cancelar
-              </button>
-            </form>
-          ) : (
-            // Exibição padrão da Worktask
-            <div>
-              <p>{worktask.description}</p>
-              <button onClick={() => handleEdit(worktask)}>Editar</button>
-              <button onClick={() => handleDelete(worktask.id)}>Excluir</button>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
+      <WorktaskList>
+        {worktasks.map((worktask) => (
+          <WorktaskItem key={worktask.id}>
+            {worktaskData.id === worktask.id ? (
+              // Formulário para edição de Worktask
+              <Form onSubmit={(e) => handleUpdate(e, worktask.id)}>
+                <label>
+                  Descrição:
+                  <Textarea
+                    name="description"
+                    value={worktaskData.description}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </label>
+                <Button as="input" type="submit" value="Salvar" />
+                <CancelButton onClick={() => setWorktaskData({ description: "" })}>
+                  Cancelar
+                </CancelButton>
+              </Form>
+            ) : (
+              // Exibição padrão da Worktask
+              <div>
+                <WorktaskDescription>{worktask.description}</WorktaskDescription>
+                <EditButton onClick={() => handleEdit(worktask)}>Editar</EditButton>
+                <DeleteButton onClick={() => handleDelete(worktask.id)}>Excluir</DeleteButton>
+              </div>
+            )}
+          </WorktaskItem>
+        ))}
+      </WorktaskList>
+    </WorktaskContainer>
   );
 };
 
