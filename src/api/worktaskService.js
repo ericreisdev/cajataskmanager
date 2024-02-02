@@ -14,6 +14,10 @@ export const getWorktasks = async (workspaceId, worklistId) => {
 
 // Função para criar uma nova worktask em uma worklist específica
 export const createWorktask = async (workspaceId, worklistId, worktaskData) => {
+    if (!workspaceId || !worklistId) {
+    console.error('workspaceId ou worklistId estão indefinidos');
+    return;
+  }
   try {
     const response = await apiClient.post(`/workspaces/${workspaceId}/worklists/${worklistId}/worktasks`, worktaskData);
     return response.data;
@@ -26,6 +30,13 @@ export const createWorktask = async (workspaceId, worklistId, worktaskData) => {
     throw error;
   }
 };
+// export const createWorktask = async (workspaceId, worklistId, worktaskData) => {
+//   if (!workspaceId || !worklistId) {
+//     console.error('workspaceId ou worklistId estão indefinidos');
+//     return;
+//   }
+//   // Restante da função...
+// };
 
 
 // Função para atualizar uma worktask específica

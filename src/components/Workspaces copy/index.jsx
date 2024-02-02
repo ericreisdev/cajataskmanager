@@ -1,30 +1,72 @@
-// Para implementar a função `handleUpdate` no seu componente `Worktask`, você precisará atualizar a `worktask` específica na lista de `worktasks` após fazer a chamada para a API de atualização. Aqui está como você pode fazer isso:
+// Entendi, você está reestruturando sua aplicação e deseja integrar as rotas de `Worklists` e `Worktasks` dentro do componente `WorkspaceLayout`, mantendo a nova estrutura de rotas que você definiu. Vamos ajustar isso.
 
-// 1. **Implementação da Função `handleUpdate`**: Essa função deve ser chamada quando o formulário de edição é enviado. Ela fará a requisição para a API para atualizar a `worktask` e depois atualizará a lista de `worktasks` localmente.
+// Para integrar as rotas de `Worklists` e `Worktasks` dentro do `WorkspaceLayout`, você precisa modificar o componente `WorkspaceLayout` para que ele possa renderizar `Worklists` e `Worktasks` com base na URL. 
 
-//    ```jsx
-   const handleUpdate = async (e, worktaskId) => {
-     e.preventDefault();
-     try {
-       const updatedWorktask = await updateWorktask(workspaceId, worklistId, worktaskId, worktaskData);
-       // Atualizar a lista de worktasks localmente
-       setWorktasks(worktasks.map(wt => wt.id === worktaskId ? updatedWorktask : wt));
-       // Resetar o formulário de edição
-       setWorktaskData({ description: "" });
-     } catch (error) {
-       console.error("Erro ao atualizar worktask:", error);
-     }
-   };
-//    ```
+// Isso pode ser feito utilizando o componente `Outlet` do `react-router-dom`, que permite renderizar componentes filhos definidos nas rotas. Primeiro, ajuste suas rotas em `App.jsx` para que `Worklists` e `Worktasks` se tornem rotas filhas de `WorkspaceLayout`:
 
-// 2. **Integrando a Função `handleUpdate` no Formulário de Edição**: No seu formulário de edição (dentro do `map` das `worktasks`), você já tem um `onSubmit` que chama `handleUpdate`.
+// ```jsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-//    ```jsx
-   <form onSubmit={(e) => handleUpdate(e, worktask.id)}>
-     {/* campos do formulário */}
-   </form>
-//    ```
+import Workspaces from "./components/Workspaces";
+import Home from "./components/Home";
+import Worklists from "./components/Workspaces/Worklists";
+import Worktasks from "./components/Workspaces/Worklists/Worktasks";
+import WorkspaceLayout from "./components/Workspaces/WorkspaceLayout";
 
-// 3. **Atualizar Estado com a Resposta da API**: Certifique-se de que a função `updateWorktask` na sua API esteja retornando a `worktask` atualizada. Isso é necessário para que a lista de `worktasks` seja atualizada corretamente na interface do usuário.
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/workspaces" element={<WorkspaceLayout />}>
+          <Route path=":workspaceId/worklists" element={<Worklists />} />
+          <Route path=":workspaceId/worklists/:worklistId/worktasks" element={<Worktasks />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+};
 
-// Com essas alterações, seu componente `Worktask` agora deve ser capaz de editar `worktasks` existentes corretamente. Lembre-se de testar a funcionalidade para garantir que tudo esteja funcionando como esperado.
+export default App;
+// ```
+
+// Note que removi o `:worktasksId` da rota de `Worktasks`, pois parece ser redundante ter o mesmo ID duas vezes na rota. Se realmente precisar dele, pode adicionar de volta.
+
+// Agora, no componente `WorkspaceLayout`, use o componente `Outlet` para renderizar o componente filho correspondente à rota acessada:
+
+// ```jsx
+import React, { useState } from "react";
+import { Outlet } from 'react-router-dom';
+import Workspaces from "..";
+import { LayoutContainer } from "./style";
+
+const WorkspaceLayout = () => {
+  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
+
+  return (
+    <LayoutContainer>
+      <div style={{ display: "flex" }}>
+        <Workspaces onSelectWorkspace={(id) => setSelectedWorkspaceId(id)} />
+        {/* Outlet renderizará Worklists ou Worktasks com base na URL */}
+        <Outlet context={[selectedWorkspaceId, setSelectedWorkspaceId]} />
+      </div>
+    </LayoutContainer>
+  );
+};
+
+export default WorkspaceLayout;
+// ```
+
+// Aqui, estou passando `selectedWorkspaceId` e `setSelectedWorkspaceId` através do contexto do `Outlet`, para que os componentes filhos possam acessar e modificar o `selectedWorkspaceId` conforme necessário.
+
+// Nos componentes `Worklists` e `Worktasks`, você pode acessar o contexto do `Outlet` para obter o `workspaceId` e a função para definir o `workspaceId`. Isso pode ser feito utilizando o hook `useOutletContext`:
+
+// ```jsx
+// Dentro do componente Worklists ou Worktasks
+const [workspaceId, setWorkspaceId] = useOutletContext();
+// ```
+
+// Isso permitirá que `Worklists` e `Worktasks` acessem e modifiquem o `workspaceId` selecionado no `WorkspaceLayout`.
+
+// Essa abordagem mantém a nova estrutura de rotas, integrando as rotas de `Worklists` e `Worktasks` dentro do `WorkspaceLayout`.

@@ -22,9 +22,13 @@ const AddWorkspaceForm = ({ onWorkspaceAdded }) => {
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Título do Workspace"
+        placeholder="Inserir nome"
+        style={{
+          textAlign: 'center', // Centraliza o texto dentro do input
+          width: '100%', // Define a largura total do input
+        }}
       />
-      <SubmitButton type="submit">Adicionar Workspace</SubmitButton>
+      <SubmitButton type="submit">Adicionar Pasta</SubmitButton>
     </Form>
   );
 };

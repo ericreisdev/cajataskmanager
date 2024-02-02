@@ -5,19 +5,23 @@ import axios from "axios";
 import AddWorkspaceForm from "./WorkspacesForm";
 import { Link } from "react-router-dom"; // Adicione esta linha
 import { useNavigate, useParams } from "react-router-dom"; // Importe useParams aqui
+import { FaTrash, FaEdit, FaSave } from "react-icons/fa";
 import {
   getWorkspaces,
   createWorkspace,
   updateWorkspace,
   deleteWorkspace,
 } from "../../api/workspaceService";
+import WorkspaceLayout from "./WorkspaceLayout";
 
 //Certifique-se de que este caminho está correto
 
-import { WorkspaceContainer, WorkspaceList, WorkspaceItem, WorkspaceTitle, Button, StyledLink, Input } from "./style";
+import { WorkspaceContainer, WorkspaceList, WorkspaceItem, WorkspaceTitle, Button, StyledLink, Input, Sidebar } from "./style";
+import { DeleteButton } from "./style";
 
-const Workspaces = () => {
+const Workspaces = ({ onSelectWorkspace }) => {
   const [workspaces, setWorkspaces] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [editingWorkspace, setEditingWorkspace] = useState(null);
 
@@ -77,33 +81,38 @@ const Workspaces = () => {
   if (isLoading) return <p>Carregando...</p>;
 
   return (
-    <WorkspaceContainer>
-      <WorkspaceTitle>Workspaces</WorkspaceTitle>
-      <AddWorkspaceForm onWorkspaceAdded={fetchWorkspaces} />
-      <WorkspaceList>
-        {workspaces.map(workspace => (
-          <WorkspaceItem key={workspace.id}>
-            {editingWorkspace && editingWorkspace.id === workspace.id ? (
-              <div>
-                <Input
-                  type="text"
-                  value={editingWorkspace.title}
-                  onChange={handleEditChange}
-                />
-                <Button onClick={() => handleSaveEdit({ title: editingWorkspace.title })}>Salvar</Button>
-                <Button onClick={handleCancelEdit}>Cancelar</Button>
-              </div>
-            ) : (
-              <>
-                <StyledLink to={`/workspaces/${workspace.id}/worklists`}>{workspace.title}</StyledLink>
-                <Button onClick={() => handleEdit(workspace)}>Editar</Button>
-                <Button onClick={() => handleDelete(workspace.id)}>Excluir</Button>
-              </>
-            )}
-          </WorkspaceItem>
-        ))}
-      </WorkspaceList>
-    </WorkspaceContainer>
+    <Sidebar>
+      <WorkspaceContainer>
+        <WorkspaceTitle>Pastas</WorkspaceTitle>
+        <AddWorkspaceForm onWorkspaceAdded={fetchWorkspaces} />
+        <WorkspaceList>
+          {workspaces.map(workspace => (
+           <WorkspaceItem key={workspace.id} onClick={() => {
+            console.log(`Workspace ${workspace.id} clicked`);
+            onSelectWorkspace(workspace.id, workspace.title);
+          }}>
+              {editingWorkspace && editingWorkspace.id === workspace.id ? (
+                <div>
+                  <Input
+                    type="text"
+                    value={editingWorkspace.title}
+                    onChange={handleEditChange}
+                  />
+                  <Button onClick={() => handleSaveEdit({ title: editingWorkspace.title })}>Salvar</Button>
+                  <Button onClick={handleCancelEdit}>Cancelar</Button>
+                </div>
+              ) : (
+                <>
+                  <span>{workspace.title}</span>
+                  <Button onClick={() => handleEdit(workspace)}><FaEdit /></Button>
+                  <DeleteButton onClick={() => handleDelete(workspace.id)}><FaTrash /></DeleteButton>
+                </>
+              )}
+            </WorkspaceItem>
+          ))}
+        </WorkspaceList>
+      </WorkspaceContainer>
+    </Sidebar>
   );
 };
 

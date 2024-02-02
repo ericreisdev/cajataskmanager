@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Worklists = ({ workspaceId }) => {
+  
   const [worklists, setWorklists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +22,7 @@ const Worklists = ({ workspaceId }) => {
 
   return (
     <div>
-      <h1>Worklists do Workspace {workspaceId}</h1>
+      <h1>Tarefas do {workspaceId}</h1>
       <ul>
         {worklists.map(worklist => (
           <li key={worklist.id}>

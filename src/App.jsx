@@ -5,24 +5,22 @@ import Workspaces from "./components/Workspaces";
 import Home from "./components/Home";
 import Worklists from "./components/Workspaces/Worklists";
 import Worktasks from "./components/Workspaces/Worklists/Worktasks";
+import WorkspaceLayout from "./components/Workspaces/WorkspaceLayout";
 // Importe seus componentes aqui
 
 const App = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/workspaces" element={<Workspaces />} />
-        <Route
-          path="/workspaces/:workspaceId/worklists"
-          element={<Worklists />}
-        />
-        <Route
-          path="/workspaces/:workspaceId/worklists/:worklistId/worktasks/:worktasksId"
-          element={<Worktasks />}
-        />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/workspaces" element={<WorkspaceLayout />} />
+      <Route path="/workspaces/:workspaceId/worklists" element={<Worklists />} />
+      {/* <Route path="/workspaces/:workspaceId/worklists/:worklistId/worktasks/:worktasksId" element={<Worktasks />} /> */}
+      // Dentro do componente Router em App.jsx
+<Route path="/workspaces/:workspaceId/worklists/:worklistId/worktasks" element={<Worktasks />} />
+
+    </Routes>
+  </Router>
   );
 };
 

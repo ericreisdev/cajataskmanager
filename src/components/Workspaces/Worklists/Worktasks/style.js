@@ -4,7 +4,7 @@ export const WorktaskContainer = styled.div`
   padding: 20px;
   max-width: 800px;
   margin: auto;
-  background-color: #f4f4f4;
+  background-color: #f4f4f4; // Já está em um tom claro
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   font-family: Arial, Helvetica, sans-serif;
@@ -20,7 +20,7 @@ export const Form = styled.form`
 export const Textarea = styled.textarea`
   padding: 10px;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px solid #d1d5db; // Cinza Claro para as bordas
   font-family: Arial, Helvetica, sans-serif;
   font-size: medium;
 `;
@@ -31,7 +31,8 @@ export const WorktaskList = styled.div`
 `;
 
 export const WorktaskItem = styled.div`
-  background-color: white;
+  background-color: #fff; // Branco para o fundo
+  border: 1px solid #e5e7eb; // Cinza Claro para as bordas
   margin: 10px 0;
   padding: 15px;
   border-radius: 4px;
@@ -45,46 +46,58 @@ export const WorktaskDescription = styled.p`
 `;
 
 export const Button = styled.button`
-  background-color: #007bff;
+  background-color: #2563eb; // Azul Brilhante para botões
   color: white;
   border: none;
   border-radius: 4px;
   padding: 10px 15px;
   font-weight: bold;
   cursor: pointer;
-  &:hover {
-    background-color: #0056b3;
-  }
   font-family: Arial, Helvetica, sans-serif;
+  &:hover {
+    background-color: #1e40af; // Cor de hover ajustada
+  }
 `;
 
 export const EditButton = styled(Button)`
-  background-color: #ffc107;
+
+  background-color: #2563eb; // Azul Brilhante para o botão
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
   &:hover {
-    background-color: #e0a800;
+    background-color: #1e40af; // Cor de hover ajustada
   }
 `;
 
 export const DeleteButton = styled(Button)`
-  background-color: #dc3545;
+  background-color: #dc3545; // Vermelho para exclusão
   &:hover {
-    background-color: #c82333;
+    background-color: #c82333; // Cor de hover ajustada
   }
 `;
 
 export const CancelButton = styled(Button)`
-  background-color: #6c757d;
+  background-color: #6c757d; // Cinza Escuro para cancelar
   &:hover {
-    background-color: #5a6268;
+    background-color: #5a6268; // Cor de hover ajustada
   }
 `;
 
 export const Div = styled.div`
+  // Sem alterações específicas de cor
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 10px 15px;
- 
   font-family: Arial, Helvetica, sans-serif;
 `;
+
+
+//C:\Users\Eric\OneDrive\Área de Trabalho\Projetos\Digital Mais\digital-mais\src\components\Workspaces\Worklists\Worktasks\style.js

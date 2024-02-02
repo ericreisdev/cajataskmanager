@@ -12,7 +12,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^39.0.1",
     "@ckeditor/ckeditor5-react": "^6.1.0",
-    "@tinymce/tinymce-react": "^4.3.0",
+    "@tinymce/tinymce-react": "^4.3.2",
     "axios": "^1.6.3",
     "cors": "^2.8.5",
     "draft-js": "^0.11.7",
