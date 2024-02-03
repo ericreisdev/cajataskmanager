@@ -18,6 +18,8 @@ import {
   Div,
   RenderTask,
   DeleteButton,
+  DivDois,
+  SpanName,
 } from "./style";
 import FlyingWindow from "../../Workspaces/FlyingWindow/index";
 import Worktask from "./Worktasks";
@@ -26,8 +28,6 @@ import { FaTrash, FaEdit, FaSave } from "react-icons/fa";
 
 const Worklists = ({ workspaceId, workspaceName }) => {
   console.log(`Workspace ID em Worklists: ${workspaceId}`);
-
-  
 
   const [worklists, setWorklists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -133,18 +133,18 @@ const Worklists = ({ workspaceId, workspaceName }) => {
   if (isLoading) return <p>Carregando...</p>;
 
   return (
-      // const Worklists = ({ workspaceId, workspaceName }) => {
-  //   // ... restante do código ...
-  
-  //   return (
-  //     <RenderTask>
-  //       <WorklistsContainer>
-  //         <Title>Tarefas do Workspace: {workspaceName}</Title>
-  //         {/* Restante da lógica de renderização */}
-  //       </WorklistsContainer>
-  //     </RenderTask>
-  //   );
-  // };
+    // const Worklists = ({ workspaceId, workspaceName }) => {
+    //   // ... restante do código ...
+
+    //   return (
+    //     <RenderTask>
+    //       <WorklistsContainer>
+    //         <Title>Tarefas do Workspace: {workspaceName}</Title>
+    //         {/* Restante da lógica de renderização */}
+    //       </WorklistsContainer>
+    //     </RenderTask>
+    //   );
+    // };
     <RenderTask>
       <WorklistsContainer>
         <Title>Tarefas da {workspaceName}</Title>
@@ -215,23 +215,32 @@ const Worklists = ({ workspaceId, workspaceName }) => {
                 </div>
               ) : (
                 <Div>
-                  <strong>Nome:</strong> {worklist.name}
-                  <br />
-                  <strong>Responsabilidade:</strong> {worklist.responsibility}
-                  <br />
-                  <strong>Data de Vencimento:</strong> {worklist.due_date}
-                  <br />
-                  <strong>Observação:</strong> {worklist.observation}
-                  <br />
-                  <Button onClick={() => setEditingWorklist(worklist)}>
-                   <FaEdit></FaEdit>
-                  </Button>
-                  <DeleteButton onClick={() => handleDelete(worklist.id)}>
-                    <FaTrash></FaTrash>
-                  </DeleteButton>
-                  <Button onClick={() => openWindow(worklist.id)}>
-                   Detalhes
-                  </Button>
+                  <DivDois>
+                    <SpanName>{worklist.name}</SpanName>
+                    <span>
+                      <strong>Responsabilidade:</strong>
+                      {worklist.responsibility}
+                    </span>
+                    <span>
+                      <strong>Data de Vencimento:</strong>
+                      {worklist.due_date}
+                    </span>
+                    <span>
+                      <strong>Observação:</strong>
+                      {worklist.observation}
+                    </span>
+                  </DivDois>
+                  <div className="button-container">
+                    <Button onClick={() => setEditingWorklist(worklist)}>
+                      <FaEdit />
+                    </Button>
+                    <DeleteButton onClick={() => handleDelete(worklist.id)}>
+                      <FaTrash />
+                    </DeleteButton>
+                    <Button onClick={() => openWindow(worklist.id)}>
+                      Detalhes
+                    </Button>
+                  </div>
                 </Div>
               )}
             </WorklistItem>

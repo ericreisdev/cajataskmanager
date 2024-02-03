@@ -168,9 +168,8 @@ const Worktask = ({ workspaceId, worklistId }) => {
     <WorktaskContainer>
       {/* Formulário para adicionar uma nova Worktask */}
       <Form onSubmit={handleSubmit}>
-        <h2>Criar Worktask</h2>
+        <h2>Adicionar detalhes</h2>
         <label>
-          <Div>Descrição:</Div>
           {/* <Textarea
             name="description"
             value={worktaskData.description}
@@ -199,6 +198,7 @@ const Worktask = ({ workspaceId, worklistId }) => {
                 <label>
                   Descrição:
                   <ReactQuill
+                    className="quill-editor"
                     value={worktaskData.description}
                     onChange={(content) =>
                       setWorktaskData({ ...worktaskData, description: content })
@@ -223,9 +223,8 @@ const Worktask = ({ workspaceId, worklistId }) => {
             ) : (
               // Exibição padrão da Worktask
               <div>
-                <WorktaskDescription>
-                  {worktask.description}
-                </WorktaskDescription>
+                <div dangerouslySetInnerHTML={{ __html: worktask.description }}></div>
+
                 <EditButton onClick={() => handleEdit(worktask)}>
                   <FaEdit></FaEdit>
                 </EditButton>

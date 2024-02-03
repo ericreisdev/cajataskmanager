@@ -81,10 +81,14 @@ const Workspaces = ({ onSelectWorkspace }) => {
   if (isLoading) return <p>Carregando...</p>;
 
   return (
+    
     <Sidebar>
+      <a href="/">Home</a>
       <WorkspaceContainer>
         <WorkspaceTitle>Pastas</WorkspaceTitle>
         <AddWorkspaceForm onWorkspaceAdded={fetchWorkspaces} />
+         {/* Link para a home do Laravel */}
+         
         <WorkspaceList>
           {workspaces.map(workspace => (
            <WorkspaceItem key={workspace.id} onClick={() => {

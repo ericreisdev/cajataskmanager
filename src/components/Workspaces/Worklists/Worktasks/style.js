@@ -99,5 +99,13 @@ export const Div = styled.div`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
+export const StyledQuill = styled.div`
+  .quill-editor {
+    min-height: 70vh; // Altura mínima inicial de 30% da altura da tela
+    max-height: 100%; // Altura máxima de 100%
+    overflow-y: auto; // Permite rolagem se o conteúdo exceder a altura máxima
+  }
+`;
+
 
 //C:\Users\Eric\OneDrive\Área de Trabalho\Projetos\Digital Mais\digital-mais\src\components\Workspaces\Worklists\Worktasks\style.js

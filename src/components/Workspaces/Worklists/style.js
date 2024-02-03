@@ -1,10 +1,8 @@
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 export const WorklistsContainer = styled.div`
   text-align: center;
   margin-top: 20px;
-  
 `;
 
 export const Title = styled.h1`
@@ -63,10 +61,10 @@ export const WorklistList = styled.ul`
 `;
 
 export const Div = styled.div`
-  display: flex; // Define este div como um contêiner flexível
-  flex-wrap: wrap;
-  justify-content: space-between; // Espaça os itens igualmente no contêiner
-  align-items: center; // Centraliza os itens verticalmente
+  display: flex;
+  flex-direction: row; // Alterado para direção da linha
+  flex-wrap: wrap; // Permite que os itens se movam para a próxima linha se necessário
+  align-items: flex-start; // Mantém os itens alinhados ao topo
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #d1d5db;
@@ -74,7 +72,49 @@ export const Div = styled.div`
   margin: 5px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
+
+  .button-container {
+    display: flex;
+    justify-content: center; // Centraliza os botões
+    width: 100%; // Ocupa a largura total do container
+    margin-top: 10px; // Espaçamento acima dos botões
+  }
 `;
+
+export const DivDois = styled.div`
+  display: flex;
+  flex-direction: row; // Alterado para direção da linha
+  flex-wrap: wrap; // Permite que os itens se movam para a próxima linha se necessário
+  align-items: flex-start; // Mantém os itens alinhados ao topo
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background-color: #f3f4f6;
+  margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  justify-content: space-evenly;
+  width: 300em;
+  span {
+    display: block; // Cada span em sua própria linha
+    margin-bottom: 5px; // Espaço entre cada linha
+  }
+`;
+
+export const SpanName = styled.span`
+ background-color: #2563eb; // Azul Brilhante para o botão
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  &:hover {
+    background-color: #1e40af; // Cor de hover ajustada
+  }
+`
 
 export const RenderTask = styled.div`
   position: fixed;
@@ -89,5 +129,14 @@ export const RenderTask = styled.div`
   overflow-y: auto; // Permite rolagem vertical se o conteúdo exceder a altura
   margin-left: 10px; // Adiciona margem à direita para evitar que o conteúdo encoste na borda
 `;
+
+export const StyledQuill = styled.div`
+  .quill-editor {
+    min-height: 30vh; // Altura mínima inicial de 30% da altura da tela
+    max-height: 100%; // Altura máxima de 100%
+    overflow-y: auto; // Permite rolagem se o conteúdo exceder a altura máxima
+  }
+`;
+
 
 //C:\Users\Eric\OneDrive\Área de Trabalho\Projetos\Digital Mais\digital-mais\src\components\Workspaces\Worklists\style.js

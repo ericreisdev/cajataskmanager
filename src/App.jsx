@@ -1,28 +1,28 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+  import React from "react";
+  import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Workspaces from "./components/Workspaces";
-import Home from "./components/Home";
-import Worklists from "./components/Workspaces/Worklists";
-import Worktasks from "./components/Workspaces/Worklists/Worktasks";
-import WorkspaceLayout from "./components/Workspaces/WorkspaceLayout";
-// Importe seus componentes aqui
+  import Workspaces from "./components/Workspaces";
+  import Home from "./components/Home";
+  import Worklists from "./components/Workspaces/Worklists";
+  import Worktasks from "./components/Workspaces/Worklists/Worktasks";
+  import WorkspaceLayout from "./components/Workspaces/WorkspaceLayout";
+  // Importe seus componentes aqui
 
-const App = () => {
-  return (
-    <Router>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/workspaces" element={<WorkspaceLayout />} />
-      <Route path="/workspaces/:workspaceId/worklists" element={<Worklists />} />
-      {/* <Route path="/workspaces/:workspaceId/worklists/:worklistId/worktasks/:worktasksId" element={<Worktasks />} /> */}
-      // Dentro do componente Router em App.jsx
-<Route path="/workspaces/:workspaceId/worklists/:worklistId/worktasks" element={<Worktasks />} />
+  const App = () => {
+    return (
+      <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/workspaces" element={<WorkspaceLayout />} />
+        <Route path="/workspaces/:workspaceId/worklists" element={<Worklists />} />
+        {/* <Route path="/workspaces/:workspaceId/worklists/:worklistId/worktasks/:worktasksId" element={<Worktasks />} /> */}
+        // Dentro do componente Router em App.jsx
+  <Route path="/workspaces/:workspaceId/worklists/:worklistId/worktasks" element={<Worktasks />} />
 
-    </Routes>
-  </Router>
-  );
-};
+      </Routes>
+    </Router>
+    );
+  };
 
-export default App;
-//C:\Users\Eric\OneDrive\Área de Trabalho\Projetos\Digital Mais\digital-mais\src\App.jsx
+  export default App;
+  //C:\Users\Eric\OneDrive\Área de Trabalho\Projetos\Digital Mais\digital-mais\src\App.jsx
